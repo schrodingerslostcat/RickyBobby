@@ -25,4 +25,156 @@
   body{
     background: radial-gradient(1200px 600px at 20% -10%,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 60%),
                 radial-gradient(800px 600px at 90% 10%,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 55%),
-                linear-gradient(135deg,var(--brandDark) 0%,
+                linear-gradient(135deg,var(--brandDark) 0%,var(--brand) 100%);
+    padding: 28px;
+  }
+
+  /* ====== Flyer card ====== */
+  .card{
+    max-width: 920px;
+    margin: 0 auto;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  /* Hero ribbon */
+  .hero{
+    background: linear-gradient(135deg,var(--brandDark),var(--brand));
+    color: #fff;
+    padding: 36px 28px 44px;
+    position: relative;
+  }
+  .hero .badge{
+    display:inline-flex; gap:8px; align-items:center;
+    background: rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.25);
+    padding:8px 12px; border-radius:999px; font-weight:600; font-size:12px;
+  }
+  .hero h1{
+    margin: 12px 0 6px; font-size: 40px; line-height:1.1; letter-spacing:.2px;
+  }
+  .hero p.sub{ margin:0; opacity:.92; font-size:16px }
+
+  /* Icon chips */
+  .chips{ display:flex; gap:12px; margin-top:18px }
+  .chip{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:46px; height:46px; border-radius:14px;
+    background: rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25);
+    font-size:22px;
+  }
+
+  /* Content area */
+  .content{ padding: 28px; }
+  .grid{
+    display:grid; gap:22px;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  }
+  .item h3{ margin:0; font-size:18px; color:var(--brandDark) }
+  .item p{ margin:6px 0 0; color:var(--ink); font-size:14px }
+  .item .pill{
+    display:inline-block; margin-bottom:8px; padding:6px 10px; border-radius:999px;
+    background:var(--pill); color:var(--brandDark); font-weight:600; font-size:12px
+  }
+
+  /* CTA band */
+  .cta{
+    margin-top: 26px;
+    background: linear-gradient(90deg,rgba(10,109,255,.08),rgba(17,185,129,.08));
+    border:1px solid rgba(10,109,255,.22);
+    padding:18px; border-radius:16px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;
+  }
+  .cta strong{ color:var(--brandDark) }
+  .btn{
+    appearance:none; border:0; border-radius:12px;
+    background:var(--accent); color:#05381f; font-weight:800;
+    padding:.9rem 1.2rem; cursor:pointer; box-shadow:0 6px 18px rgba(17,185,129,.35);
+  }
+
+  /* Footer details */
+  .meta{
+    margin-top:18px; text-align:center; color:var(--muted); font-size:12px
+  }
+  .contact{ text-align:center; margin-top:14px; line-height:1.5 }
+  .contact a{ color:var(--brandDark); text-decoration:none; font-weight:700 }
+
+  /* Print styles (clean, centered, no drop shadows; adds tear-offs) */
+  @media print{
+    body{ background:#fff; padding:0 }
+    .card{ box-shadow:none; border-radius:0 }
+    .hero{ color:#0c2340; background:#eaf2ff }
+    .chip{ background:#e7efff; border-color:#cfe0ff; color:#0c2340 }
+    .cta{ border-color:#a7c8ff }
+    .btn{ display:none } /* buttons don’t belong on paper */
+    .tear{
+      display:grid; grid-template-columns: repeat(10,1fr);
+      gap:8px; margin:22px 0 8px; padding-top:10px; border-top:1px dashed #b3c5e7;
+      font: 700 12px/1.2 Inter,Arial,sans-serif; color:#0c2340; text-align:center;
+    }
+    .tear > span{ border-right:1px dashed #c9d7f2; padding-right:6px }
+    .tear > span:last-child{ border-right:0 }
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <!-- HERO -->
+    <section class="hero">
+      <span class="badge">🚚⏱️ Launch Preview</span>
+      <h1>Spin &amp; Dash Laundry</h1>
+      <p class="sub">Your Laundry. Spun. Dashed. Delivered.</p>
+      <div class="chips" aria-hidden="true">
+        <div class="chip">🚚</div>
+        <div class="chip">⏱️</div>
+        <div class="chip">🫧</div>
+      </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <section class="content">
+      <div class="grid">
+        <article class="item">
+          <span class="pill">Speed</span>
+          <h3>Fast Turnaround</h3>
+          <p>Optimized routes for 24–48-hour service; premium rush available when you need it even faster.</p>
+        </article>
+        <article class="item">
+          <span class="pill">Value</span>
+          <h3>Tiered Plans &amp; Bundles</h3>
+          <p>Founding plans launching at a discount for families and busy pros. Mix-and-match add-ons.</p>
+        </article>
+        <article class="item">
+          <span class="pill">Care</span>
+          <h3>Eco-Friendly Clean</h3>
+          <p>High-efficiency machines with biodegradable detergents; gentle options for sensitive skin.</p>
+        </article>
+        <article class="item">
+          <span class="pill">Business</span>
+          <h3>Commercial Solutions</h3>
+          <p>Custom packages for hotels, clinics &amp; corporate clients with scheduled pickups.</p>
+        </article>
+      </div>
+
+      <div class="cta">
+        <div><strong>Be first to launch.</strong> Join text alerts &amp; email notifications for routes and the app drop.</div>
+        <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+
+      <div class="contact">
+        Call or Text: <a href="tel:+12695508801">269-550-8801</a><br>
+        Email: <a href="mailto:spinanddashlaundry@gmail.com">spinanddashlaundry@gmail.com</a>
+      </div>
+
+      <p class="meta">Female-Owned &nbsp;•&nbsp; Bonded &amp; Insured &nbsp;•&nbsp; West Michigan</p>
+
+      <!-- Print-only tear-off tabs -->
+      <div class="tear">
+        <span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span>
+        <span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
