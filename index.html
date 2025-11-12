@@ -1,223 +1,313 @@
-  <!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Spin & Dash Laundry — One-Page Flyer</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Spin & Dash — One-Page PDF (Canvas)</title>
 <style>
-  /* Base */
-  *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  html,body{margin:0;background:#eef4ff;color:#0b1220;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif}
-
-  :root{--blue:#0A6DFF;--blueD:#063CB6;--ink:#0b1220;--paper:#fff;--green:#10b981}
-
-  /* Letter canvas for on-screen composition (we’ll FLATTEN to an image for PDF) */
-  .sheet{
-    width:8.5in;height:11in;margin:0 auto;background:var(--paper);
-    padding:0.50in;display:flex;flex-direction:column;gap:0.25in;
-    box-shadow:0 18px 44px rgba(0,0,0,.14)
-  }
-  .no-break{break-inside:avoid}
-
-  /* HERO */
-  .hero{background:linear-gradient(135deg,var(--blueD),var(--blue));color:#fff;border-radius:18px;padding:0.35in}
-  .eyebar{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
-  .pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
-  .headline{margin:0;font-weight:900;font-size:48px;line-height:1.06}
-  .sub{margin:6px 0 0;opacity:.96}
-  .chips{display:flex;gap:10px;margin-top:10px}
-  .chip{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center}
-
-  /* BODY */
-  .grid{display:grid;grid-template-columns:1.55fr .95fr;gap:16px}
-  .card{border:1px solid #dce6ff;border-radius:18px;background:#fff;box-shadow:0 10px 22px rgba(0,0,0,.08)}
-  .pad{padding:18px}
-  .h6{margin:0 0 8px;color:#233b79;font-weight:800}
-  .rows{display:grid;gap:10px}
-  .row{display:grid;grid-template-columns:1fr auto;gap:12px;background:#f8fbff;border:1px solid #e7efff;padding:12px 14px;border-radius:12px}
-  .row b{font-weight:800}.amt{font-weight:900}
-  ul.bul{margin:10px 0 0 18px} ul.bul li{margin:6px 0}
-  .ribbon{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
-  .feat{display:flex;gap:8px;align-items:flex-start;padding:10px;border:1px solid #e6edff;border-radius:12px;background:linear-gradient(180deg,#fbfdff,#f4f8ff)}
-  .feat b{color:#063cb6}
-  .ctaBand{margin-top:10px;border:1px solid #cfe0ff;border-radius:12px;background:linear-gradient(90deg,#eef5ff,#ecfff7);padding:12px 14px;font-weight:700}
-
-  /* Right column: call-first */
-  .call{display:flex;flex-direction:column;gap:12px}
-  .mark{display:flex;gap:8px}
-  .ctaBox{border:2px solid var(--blueD);border-radius:18px;background:#f6f9ff;box-shadow:0 10px 24px rgba(0,0,0,.06);padding:16px;text-align:center}
-  .ctaText{margin:0 0 6px;font-size:18px;font-weight:800;color:#334}
-  .bigNum{font-size:34px;font-weight:900;color:#063cb6;letter-spacing:.5px}
-  .alt{margin-top:4px;font-size:13px;color:#6b7280}
-  .btn{margin-top:8px;display:inline-block;padding:12px 16px;border-radius:12px;background:var(--green);color:#063;font-weight:900;text-decoration:none}
-
-  .footer{text-align:center;color:#6b7280;font-size:13px;margin-top:auto}
-
-  /* On-screen action buttons */
-  .actions{position:fixed;right:14px;bottom:14px;display:flex;gap:8px;z-index:999}
-  .actions button{border:0;border-radius:12px;padding:12px 14px;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.18)}
-  .save{background:#10b981;color:#063}
-  .print{background:#e5e7eb;color:#111}
-
-  /* Optional system print fallback */
-  @media print{
-    @page{size:Letter;margin:0}
-    html,body{background:#fff}
-    .sheet{margin:0;box-shadow:none}
-    .grid{display:block}
-    .actions{display:none}
-  }
-
-  /* Mobile view */
-  @media (max-width:900px){
-    .sheet{width:100vw;height:auto;min-height:100vh;padding:4vw}
-    .grid{grid-template-columns:1fr}
-  }
+  html,body{margin:0;background:#eef4ff;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif;color:#0b1220}
+  .wrap{max-width:960px;margin:20px auto;padding:16px}
+  .card{background:#fff;border-radius:16px;box-shadow:0 18px 44px rgba(0,0,0,.14);padding:16px}
+  .actions{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+  .primary{background:#10b981;color:#063}
+  .secondary{background:#0A6DFF;color:#fff}
+  .note{color:#5f6b7a;font-size:14px;margin-top:10px}
+  canvas{display:none} /* hidden; we render and export */
 </style>
 </head>
 <body>
-
-<main id="flyer" class="sheet no-break">
-  <!-- HERO -->
-  <header class="hero no-break">
-    <div class="eyebar">
-      <span class="pill">West Michigan</span>
-      <span class="pill">Female-Owned</span>
-      <span class="pill">Bonded & Insured</span>
+<div class="wrap">
+  <div class="card">
+    <h2 style="margin:0 0 8px">Spin &amp; Dash — One-Page Flyer</h2>
+    <div class="actions">
+      <button class="btn primary" onclick="generatePDF()">Generate One-Page PDF</button>
+      <button class="btn secondary" onclick="downloadPNG()">Download High-Res PNG</button>
     </div>
-    <h1 class="headline">Laundry That Moves as Fast as You Do.</h1>
-    <p class="sub">Founding routes now open — 24–48h turnaround with pro wash–dry–fold.</p>
-    <div class="chips" aria-hidden="true">
-      <div class="chip">
-        <!-- basket -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="2"/>
-          <path d="M7 10h10M8 13h8M9 16h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="chip">
-        <!-- van -->
-        <svg width="24" height="16" viewBox="0 0 64 40" fill="none">
-          <rect x="2" y="10" width="42" height="18" rx="3" stroke="white" stroke-width="2" fill="rgba(255,255,255,.08)"/>
-          <rect x="44" y="16" width="12" height="12" rx="2" stroke="white" stroke-width="2" fill="rgba(255,255,255,.08)"/>
-          <circle cx="16" cy="32" r="3" fill="#fff"/><circle cx="50" cy="32" r="3" fill="#fff"/>
-        </svg>
-      </div>
-      <div class="chip">
-        <!-- stopwatch -->
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="13" r="7" stroke="#fff" stroke-width="2"/>
-          <line x1="12" y1="5" x2="12" y2="3" stroke="#fff" stroke-width="2"/>
-          <line x1="12" y1="13" x2="12" y2="9" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-          <line x1="12" y1="13" x2="15" y2="13" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </div>
-    </div>
-  </header>
-
-  <!-- BODY -->
-  <section class="grid no-break">
-    <!-- Left: pricing & benefits -->
-    <div class="card pad no-break">
-      <h3 class="h6">Transparent Pricing</h3>
-      <div class="rows">
-        <div class="row"><b>Standard Wash, Dry &amp; Fold</b><div class="amt">$1.75/lb</div></div>
-        <div class="row"><b>Express Service</b><div class="amt">$2.25/lb</div></div>
-        <div class="row"><b>Minimum Order</b><div class="amt">$35 min</div></div>
-      </div>
-      <ul class="bul">
-        <li>We weigh laundry for accuracy</li>
-        <li>Free local pickup &amp; delivery</li>
-      </ul>
-
-      <div class="ribbon">
-        <div class="feat">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12l4 4 12-12" stroke="#10b981" stroke-width="2"/></svg>
-          <div><b>Founding Perks</b><br/>Early-bird slots + priority routes.</div>
-        </div>
-        <div class="feat">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#063cb6" stroke-width="2"/></svg>
-          <div><b>24–48h Turnaround</b><br/>Rush upgrades when needed.</div>
-        </div>
-        <div class="feat">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l4 8-4 12-4-12 4-8z" stroke="#ef4444" stroke-width="2"/></svg>
-          <div><b>Tiered Plans</b><br/>Bundles for families &amp; busy pros.</div>
-        </div>
-      </div>
-
-      <div class="ctaBand">Be first to launch. Reply today to lock your route.</div>
-    </div>
-
-    <!-- Right: call-first -->
-    <aside class="card pad call no-break">
-      <div class="mark" aria-hidden="true">
-        <!-- phone -->
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-          <path d="M6 2h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4c0 1-1 2-2 2A17 17 0 0 1 4 6c0-1 1-2 2-2Z"
-                stroke="#063cb6" stroke-width="2" fill="rgba(6,60,182,.08)"/>
-        </svg>
-        <!-- chat -->
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-          <path d="M4 4h16v10H7l-3 3V4Z"
-                stroke="#063cb6" stroke-width="2" fill="rgba(6,60,182,.08)"/>
-        </svg>
-      </div>
-
-      <div class="ctaBox">
-        <p class="ctaText">Text <span style="color:#063cb6">“SPIN”</span> to</p>
-        <div class="bigNum">269-550-8801</div>
-        <p class="ctaText" style="margin-top:8px">Book or Join the Waitlist</p>
-        <div class="alt">Prefer email? <a href="mailto:spinanddashlaundry@gmail.com" style="color:#063cb6;text-decoration:none;font-weight:800">spinanddashlaundry@gmail.com</a></div>
-        <a class="btn" href="tel:+12695508801">Tap to Call</a>
-      </div>
-
-      <div class="alt">Fast response • Friendly service • Local team</div>
-    </aside>
-  </section>
-
-  <footer class="footer no-break">© Spin & Dash Laundry • Female-Owned • Bonded & Insured • West Michigan</footer>
-</main>
-
-<!-- Action buttons -->
-<div class="actions">
-  <button class="save" onclick="flattenAndSave()">Flatten &amp; Save PDF (One Page)</button>
-  <button class="print" onclick="window.print()">System Print</button>
+    <div class="note">This draws the flyer to a 300-DPI Letter canvas (2550×3300) and saves it as a single-page PDF. Works in DuckDuckGo.</div>
+  </div>
 </div>
 
-<!-- html2canvas for flattening -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
+<canvas id="flyer" width="2550" height="3300"></canvas>
+
+<!-- jsPDF (for PDF creation) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-6Jp5JbXzj2YxT1g3G0D5kS2c1wQFhO2e3gk2wz7M2yN2N1lqvO5b5Vv5k8h4VvVv2o3hQhFQw8Vj4pG6vM6fNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
-async function flattenAndSave(){
-  const flyer = document.getElementById('flyer');
+/* === CONFIG (edit these if needed) === */
+const DATA = {
+  headerTitle: "Laundry That Moves as Fast as You Do.",
+  headerSub: "Founding routes now open — 24–48h turnaround with pro wash–dry–fold.",
+  badges: ["West Michigan","Female-Owned","Bonded & Insured"],
+  pricing: [
+    {label:"Standard Wash, Dry & Fold", price:"$1.75/lb"},
+    {label:"Express Service",           price:"$2.25/lb"},
+    {label:"Minimum Order",             price:"$35 min"}
+  ],
+  bullets: [
+    "We weigh laundry for accuracy",
+    "Free local pickup & delivery"
+  ],
+  features: [
+    {title:"Founding Perks",     desc:"Early-bird slots + priority routes."},
+    {title:"24–48h Turnaround",  desc:"Rush upgrades when needed."},
+    {title:"Tiered Plans",       desc:"Bundles for families & busy pros."}
+  ],
+  ctaBand: "Be first to launch. Reply today to lock your route.",
+  phoneCTA: "Text “SPIN” to",
+  phone: "269-550-8801",
+  phoneSub: "Book or Join the Waitlist",
+  email: "spinanddashlaundry@gmail.com"
+};
 
-  // Render flyer to high-res bitmap
-  const canvas = await html2canvas(flyer, {
-    backgroundColor:'#ffffff',
-    scale:2,             // crisp output
-    useCORS:true,
-    windowWidth:flyer.scrollWidth,
-    windowHeight:flyer.scrollHeight
+/* === DRAW THE FLYER ON A 2550x3300 CANVAS === */
+function drawFlyer(ctx){
+  const W = 2550, H = 3300;
+  ctx.fillStyle = "#ffffff"; ctx.fillRect(0,0,W,H);
+
+  /* MARGINS */
+  const M = 120; // ~0.4in
+  const innerW = W - M*2;
+
+  /* HERO GRADIENT RECT */
+  const heroX = M, heroY = M, heroW = innerW, heroH = 560;
+  const grad = ctx.createLinearGradient(heroX, heroY, heroX+heroW, heroY+heroH);
+  grad.addColorStop(0, "#063CB6"); grad.addColorStop(1, "#0A6DFF");
+  ctx.fillStyle = grad;
+  roundRect(ctx, heroX, heroY, heroW, heroH, 36); ctx.fill();
+
+  /* BADGE PILLS */
+  const pillPadX = 22, pillPadY = 14, pillGap = 14;
+  let pillX = heroX + 26, pillY = heroY + 26;
+  ctx.font = "bold 36px Arial"; ctx.textBaseline = "middle";
+  for(const b of DATA.badges){
+    const tw = ctx.measureText(b).width;
+    const bw = tw + pillPadX*2, bh = 52;
+    ctx.fillStyle = "rgba(255,255,255,0.18)";
+    ctx.strokeStyle = "rgba(255,255,255,0.36)"; ctx.lineWidth = 2;
+    roundRect(ctx, pillX, pillY, bw, bh, 999); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#fff";
+    ctx.fillText(b, pillX + pillPadX, pillY + bh/2);
+    pillX += bw + pillGap;
+  }
+
+  /* HEADLINE + SUB */
+  ctx.fillStyle = "#fff";
+  ctx.font = "900 92px Arial";
+  ctx.textBaseline = "top";
+  wrapText(ctx, DATA.headerTitle, heroX+26, heroY+120, heroW-52, 100);
+
+  ctx.font = "500 46px Arial";
+  drawParagraph(ctx, DATA.headerSub, heroX+26, heroY+310, heroW-52, 60);
+
+  /* HERO ICON CHIPS (3 simple icons) */
+  const chipY = heroY + heroH - 100, chipSize = 72, chipR = 18;
+  for(let i=0;i<3;i++){
+    const cx = heroX + 26 + i*(chipSize+16);
+    ctx.fillStyle = "rgba(255,255,255,0.18)";
+    ctx.strokeStyle = "rgba(255,255,255,0.36)"; ctx.lineWidth = 2;
+    roundRect(ctx, cx, chipY, chipSize, chipSize, chipR); ctx.fill(); ctx.stroke();
+    // icon: simple white shapes
+    ctx.strokeStyle = "#fff"; ctx.lineWidth = 6;
+    if(i===0){ // basket-ish
+      ctx.beginPath(); ctx.arc(cx+chipSize/2, chipY+chipSize/2, 24, 0, Math.PI*2); ctx.stroke();
+      line(ctx, cx+18, chipY+chipSize/2-10, cx+chipSize-18, chipY+chipSize/2-10);
+      line(ctx, cx+22, chipY+chipSize/2+10, cx+chipSize-22, chipY+chipSize/2+10);
+    }else if(i===1){ // van-ish
+      ctx.strokeRect(cx+12, chipY+20, 44, 28);
+      ctx.beginPath(); ctx.arc(cx+24, chipY+56, 6, 0, Math.PI*2); ctx.fillStyle="#fff"; ctx.fill();
+      ctx.beginPath(); ctx.arc(cx+48, chipY+56, 6, 0, Math.PI*2); ctx.fill();
+    }else{ // stopwatch-ish
+      ctx.beginPath(); ctx.arc(cx+chipSize/2, chipY+chipSize/2+2, 24, 0, Math.PI*2); ctx.stroke();
+      line(ctx, cx+chipSize/2, chipY+10, cx+chipSize/2, chipY+4);
+      line(ctx, cx+chipSize/2, chipY+chipSize/2+2, cx+chipSize/2, chipY+chipSize/2-16);
+      line(ctx, cx+chipSize/2, chipY+chipSize/2+2, cx+chipSize/2+14, chipY+chipSize/2+2);
+    }
+  }
+
+  /* BODY COLUMNS */
+  const colGap = 40;
+  const leftX = M, rightX = M + Math.floor(innerW*0.60) + colGap;
+  const leftW = Math.floor(innerW*0.60) - colGap;
+  const rightW = innerW - (leftW + colGap);
+  let y = heroY + heroH + 40;
+
+  // LEFT CARD
+  const leftCardH = 1500;
+  drawCard(ctx, leftX, y, leftW, leftCardH);
+  let lx = leftX + 28, ly = y + 28, lw = leftW - 56;
+
+  ctx.fillStyle = "#233b79";
+  ctx.font = "800 48px Arial"; ctx.fillText("Transparent Pricing", lx, ly); ly += 70;
+
+  // Pricing rows
+  ctx.font = "700 40px Arial";
+  const rowH = 96, rowR = 22;
+  DATA.pricing.forEach(row => {
+    drawRow(ctx, lx, ly, lw, rowH, rowR, row.label, row.price);
+    ly += rowH + 16;
   });
-  const dataURL = canvas.toDataURL('image/jpeg', 0.92);
 
-  // Open a clean tab with just the image inside a Letter page and trigger print
-  const w = window.open('', '_blank');
-  w.document.write(`<!doctype html>
-  <html><head><meta charset="utf-8"><title>Spin & Dash — Flyer</title>
-  <style>
-    @page { size: Letter; margin: 0 }
-    html,body{ margin:0; background:#fff }
-    .wrap{ width:8.5in; height:11in; display:flex; align-items:center; justify-content:center }
-    img{ max-width:8.3in; max-height:10.8in } /* safe gutters */
-    .note{ position:fixed; left:12px; top:12px; font:700 12px/1 system-ui; color:#111; opacity:.6 }
-    @media print{ .note{ display:none } }
-  </style></head>
-  <body>
-    <div class="note">If asked: Destination = Save as PDF • Background graphics = ON</div>
-    <div class="wrap"><img src="${dataURL}" alt="Spin & Dash Flyer"></div>
-    <script>setTimeout(()=>{ window.print(); }, 250);<\/script>
-  </body></html>`);
-  w.document.close();
+  // Bullets
+  ctx.font = "400 36px Arial"; ctx.fillStyle = "#0b1220";
+  DATA.bullets.forEach(b=>{
+    bullet(ctx, lx, ly, b);
+    ly += 56;
+  });
+
+  // Feature ribbon (3)
+  ly += 24;
+  const featW = Math.floor((lw - 24*2)/3);
+  DATA.features.forEach((f, i)=>{
+    const fx = lx + i*(featW + 24);
+    featureBox(ctx, fx, ly, featW, 150, f.title, f.desc);
+  });
+  ly += 150 + 24;
+
+  // CTA band
+  ctaBand(ctx, lx, ly, lw, 90, DATA.ctaBand);
+  ly += 90;
+
+  // RIGHT CARD — Call-first panel
+  const rightCardH = 700;
+  drawCard(ctx, rightX, y, rightW, rightCardH);
+  let rx = rightX + 28, ry = y + 28, rw = rightW - 56;
+
+  // mark icons
+  ctx.strokeStyle = "#063cb6"; ctx.lineWidth = 6;
+  // phone
+  ctx.strokeRect(rx, ry, 52, 36);
+  // chat
+  ctx.strokeRect(rx+64, ry, 52, 36);
+  ry += 60;
+
+  // call box
+  callBox(ctx, rx, ry, rw, 260, DATA.phoneCTA, DATA.phone, DATA.phoneSub, DATA.email);
+  ry += 260 + 12;
+
+  ctx.fillStyle = "#6b7280"; ctx.font = "500 32px Arial";
+  ctx.fillText("Fast response • Friendly service • Local team", rx, ry);
+
+  // FOOTER
+  const footerText = "© Spin & Dash Laundry • Female-Owned • Bonded & Insured • West Michigan";
+  ctx.fillStyle = "#6b7280"; ctx.font = "500 28px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText(footerText, W/2, H - M);
+  ctx.textAlign = "left";
+}
+
+/* === CANVAS HELPERS === */
+function roundRect(ctx,x,y,w,h,r){
+  const rr = Math.min(r, w/2, h/2);
+  ctx.beginPath();
+  ctx.moveTo(x+rr,y);
+  ctx.arcTo(x+w,y,x+w,y+h,rr);
+  ctx.arcTo(x+w,y+h,x,y+h,rr);
+  ctx.arcTo(x,y+h,x,y,rr);
+  ctx.arcTo(x,y,x+w,y,rr);
+  ctx.closePath();
+}
+function line(ctx,x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
+
+function wrapText(ctx, text, x, y, maxWidth, lineHeight){
+  const words = text.split(' '); let line = '';
+  for(let n=0;n<words.length;n++){
+    const testLine = line + words[n] + ' ';
+    const metrics = ctx.measureText(testLine);
+    if(metrics.width > maxWidth && n>0){ ctx.fillText(line, x, y); line = words[n] + ' '; y += lineHeight; }
+    else { line = testLine; }
+  }
+  ctx.fillText(line, x, y);
+}
+
+function drawParagraph(ctx, text, x, y, maxWidth, lineHeight){
+  const parts = text.split(/\s+/); let line=''; ctx.textBaseline="top";
+  for(let i=0;i<parts.length;i++){
+    const test = line + parts[i] + ' ';
+    if(ctx.measureText(test).width > maxWidth){ ctx.fillText(line, x, y); y += lineHeight; line = parts[i] + ' '; }
+    else{ line = test; }
+  }
+  if(line) ctx.fillText(line, x, y);
+}
+
+function drawCard(ctx,x,y,w,h){
+  ctx.fillStyle = "#ffffff";
+  ctx.strokeStyle = "#dce6ff"; ctx.lineWidth = 3;
+  roundRect(ctx, x, y, w, h, 24); ctx.fill(); ctx.stroke();
+  // drop shadow hint
+  ctx.save(); ctx.shadowColor="rgba(0,0,0,.08)"; ctx.shadowBlur=18; ctx.shadowOffsetY=10;
+  ctx.fill(); ctx.restore();
+}
+
+function drawRow(ctx,x,y,w,h,r,label,price){
+  // bg
+  ctx.fillStyle = "#f8fbff"; ctx.strokeStyle = "#e7efff"; ctx.lineWidth = 2;
+  roundRect(ctx, x, y, w, h, r); ctx.fill(); ctx.stroke();
+  // text
+  ctx.fillStyle = "#0b1220"; ctx.font = "800 38px Arial"; ctx.textBaseline="middle";
+  ctx.fillText(label, x+18, y+h/2);
+  ctx.textAlign="right"; ctx.font="900 40px Arial";
+  ctx.fillText(price, x+w-18, y+h/2); ctx.textAlign="left";
+}
+
+function bullet(ctx,x,y,text){
+  ctx.fillStyle = "#063cb6"; ctx.beginPath(); ctx.arc(x+6, y+10, 6, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = "#0b1220"; ctx.fillText(text, x+24, y);
+}
+
+function featureBox(ctx,x,y,w,h,title,desc){
+  ctx.fillStyle="#fbfdff"; ctx.strokeStyle="#e6edff"; ctx.lineWidth=2;
+  roundRect(ctx, x, y, w, h, 16); ctx.fill(); ctx.stroke();
+  ctx.fillStyle="#063cb6"; ctx.font="800 32px Arial"; ctx.fillText(title, x+12, y+36);
+  ctx.fillStyle="#0b1220"; ctx.font="400 30px Arial";
+  drawParagraph(ctx, desc, x+12, y+72, w-24, 36);
+}
+
+function ctaBand(ctx,x,y,w,h,text){
+  // gradient look
+  const g = ctx.createLinearGradient(x,y,x+w,y);
+  g.addColorStop(0,"#eef5ff"); g.addColorStop(1,"#ecfff7");
+  ctx.fillStyle = g; ctx.strokeStyle = "#cfe0ff"; ctx.lineWidth=2;
+  roundRect(ctx, x, y, w, h, 14); ctx.fill(); ctx.stroke();
+  ctx.fillStyle="#063cb6"; ctx.font="700 34px Arial";
+  ctx.textBaseline="middle"; ctx.fillText(text, x+14, y+h/2);
+}
+
+function callBox(ctx,x,y,w,h,pre,phone,sub,email){
+  ctx.fillStyle="#f6f9ff"; ctx.strokeStyle="#063cb6"; ctx.lineWidth=4;
+  roundRect(ctx, x, y, w, h, 18); ctx.fill(); ctx.stroke();
+  ctx.textAlign="center";
+  ctx.fillStyle="#334"; ctx.font="800 36px Arial"; ctx.fillText(pre, x+w/2, y+40);
+  ctx.fillStyle="#063cb6"; ctx.font="900 60px Arial"; ctx.fillText(phone, x+w/2, y+104);
+  ctx.fillStyle="#334"; ctx.font="800 32px Arial"; ctx.fillText(sub, x+w/2, y+160);
+  ctx.fillStyle="#063cb6"; ctx.font="700 30px Arial"; ctx.fillText(email, x+w/2, y+210);
+  ctx.textAlign="left";
+}
+
+/* === EXPORTS === */
+function generatePDF(){
+  const canvas = document.getElementById('flyer');
+  const ctx = canvas.getContext('2d');
+  drawFlyer(ctx);
+
+  // Make a PDF (Letter = 612×792 points)
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF('p','pt','letter');
+  const img = canvas.toDataURL('image/jpeg', 0.9);
+  pdf.addImage(img, 'JPEG', 0, 0, 612, 792); // full page
+  pdf.save('SpinDash_Flyer.pdf');
+}
+
+function downloadPNG(){
+  const canvas = document.getElementById('flyer');
+  const ctx = canvas.getContext('2d');
+  drawFlyer(ctx);
+  const link = document.createElement('a');
+  link.download = 'SpinDash_Flyer_2550x3300.png';
+  link.href = canvas.toDataURL('image/png');
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
 }
 </script>
 </body>
