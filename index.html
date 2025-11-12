@@ -1,214 +1,186 @@
 <!doctype html>
 <html lang="en">
-<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Spin & Dash — One-Page Vector Flyer</title>
+<title>Spin & Dash — Flyer (Letter SVG)</title>
 <style>
-  html,body{margin:0;background:#eef4ff;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif}
-  .frame{max-width:900px;margin:16px auto;padding:12px}
-  .bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-  button{border:0;border-radius:12px;padding:12px 14px;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.18);cursor:pointer}
-  .primary{background:#10b981;color:#063}
-  .secondary{background:#0A6DFF;color:#fff}
-  .note{color:#475569;font-size:13px;margin-top:8px}
-  .sheet{display:block;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 18px 44px rgba(0,0,0,.14)}
-  /* print view */
-  @media print{
-    @page{size:Letter;margin:0}
-    .frame,.bar,.note{display:none}
-    body{background:#fff}
-  }
+  html,body{margin:0;background:#eef4ff}
+  .frame{max-width:900px;margin:12px auto;padding:8px}
+  .note{font:600 12px/1.4 system-ui,Segoe UI,Arial;color:#334;margin:6px 8px}
+  @media print{@page{size:Letter;margin:0}html,body{background:#fff}}
 </style>
-</head>
-<body>
 <div class="frame">
-  <div class="bar">
-    <button class="primary" onclick="savePDF()">Save as PDF (One Page)</button>
-    <button class="secondary" onclick="downloadSVG()">Download SVG</button>
-  </div>
-  <div class="note">If DuckDuckGo blocks the PDF flow, tap “Download SVG”, then open it from Files and choose “Print → Save as PDF”. SVG is vector, so it’s always one crisp page.</div>
+  <div class="note">Tip: in the print sheet choose “Margins: None” and (if shown) enable “Background graphics”.</div>
 </div>
 
-<!-- LETTER-SIZED SVG (exactly 8.5in × 11in) -->
-<svg id="flyerSVG" class="sheet" xmlns="http://www.w3.org/2000/svg"
-     width="8.5in" height="11in" viewBox="0 0 850 1100">
-
-  <!-- paper background -->
-  <rect x="0" y="0" width="850" height="1100" fill="#ffffff"/>
-
-  <!-- HERO gradient panel -->
+<!-- EXACT Letter size -->
+<svg id="flyer" xmlns="http://www.w3.org/2000/svg" width="8.5in" height="11in" viewBox="0 0 850 1100">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#063CB6"/>
-      <stop offset="1" stop-color="#0A6DFF"/>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#063CB6"/><stop offset="1" stop-color="#0A6DFF"/>
     </linearGradient>
-    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".12"/>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity=".12"/>
     </filter>
     <style>
-      .headline{font:900 48px/1.06 Inter,Segoe UI,Arial,sans-serif;fill:#fff}
-      .sub{font:500 16px/1.5 Inter,Segoe UI,Arial,sans-serif;fill:#eef6ff}
-      .pill{font:700 12px Inter,Segoe UI,Arial,sans-serif;fill:#fff}
-      .h6{font:800 18px Inter,Segoe UI,Arial,sans-serif;fill:#233b79}
-      .rowL{font:800 16px Inter,Segoe UI,Arial,sans-serif;fill:#0b1220}
-      .rowR{font:900 18px Inter,Segoe UI,Arial,sans-serif;fill:#0b1220}
-      .bul{font:400 14px Inter,Segoe UI,Arial,sans-serif;fill:#0b1220}
-      .featT{font:800 14px Inter,Segoe UI,Arial,sans-serif;fill:#063cb6}
-      .featD{font:400 13px Inter,Segoe UI,Arial,sans-serif;fill:#0b1220}
-      .ctaBand{font:700 15px Inter,Segoe UI,Arial,sans-serif;fill:#063cb6}
-      .ctaBig{font:900 28px Inter,Segoe UI,Arial,sans-serif;fill:#063cb6}
-      .ctaText{font:800 16px Inter,Segoe UI,Arial,sans-serif;fill:#334}
-      .foot{font:500 12px Inter,Segoe UI,Arial,sans-serif;fill:#6b7280}
+      .h1{font:900 54px/1.06 Inter,Segoe UI,Arial;fill:#fff}
+      .sub{font:500 18px/1.5 Inter,Segoe UI,Arial;fill:#eaf3ff}
+      .pill{font:800 12px Inter,Segoe UI,Arial;fill:#fff}
+      .h6{font:900 20px Inter,Segoe UI,Arial;fill:#223a78}
+      .rowL{font:800 16px Inter,Segoe UI,Arial;fill:#0b1220}
+      .rowR{font:900 18px Inter,Segoe UI,Arial;fill:#0b1220}
+      .bul{font:500 14px Inter,Segoe UI,Arial;fill:#0b1220}
+      .featT{font:900 14px Inter,Segoe UI,Arial;fill:#063cb6}
+      .featD{font:500 13px Inter,Segoe UI,Arial;fill:#0b1220}
+      .ctaBand{font:900 15px Inter,Segoe UI,Arial;fill:#063cb6}
+      .ctaBig{font:900 28px Inter,Segoe UI,Arial;fill:#063cb6}
+      .ctaTxt{font:800 16px Inter,Segoe UI,Arial;fill:#334}
+      .foot{font:600 12px Inter,Segoe UI,Arial;fill:#6b7280}
     </style>
   </defs>
 
-  <!-- HERO CARD -->
-  <g transform="translate(40,40)">
-    <rect x="0" y="0" rx="18" ry="18" width="770" height="220" fill="url(#g)"/>
-    <!-- pills -->
-    <g transform="translate(22,16)">
-      <g transform="translate(0,0)"><rect rx="999" ry="999" width="110" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">West Michigan</text></g>
-      <g transform="translate(122,0)"><rect rx="999" ry="999" width="110" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">Female-Owned</text></g>
-      <g transform="translate(244,0)"><rect rx="999" ry="999" width="128" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">Bonded & Insured</text></g>
-    </g>
-    <text class="headline" x="22" y="92">Laundry That Moves as Fast</text>
-    <text class="headline" x="22" y="142">as You Do.</text>
-    <text class="sub" x="22" y="178">Founding routes now open — 24–48h turnaround with pro wash–dry–fold.</text>
+  <!-- paper -->
+  <rect x="0" y="0" width="850" height="1100" fill="#fff"/>
 
-    <!-- chips -->
-    <g transform="translate(22,190)">
+  <!-- HERO -->
+  <g transform="translate(40,40)">
+    <rect x="0" y="0" rx="22" ry="22" width="770" height="260" fill="url(#hero)"/>
+    <!-- pills -->
+    <g transform="translate(22,18)">
+      <g><rect rx="999" ry="999" width="118" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">West Michigan</text></g>
+      <g transform="translate(130,0)"><rect rx="999" ry="999" width="116" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">Female-Owned</text></g>
+      <g transform="translate(250,0)"><rect rx="999" ry="999" width="136" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">Bonded &amp; Insured</text></g>
+    </g>
+
+    <text class="h1" x="22" y="110">Laundry That Moves as Fast</text>
+    <text class="h1" x="22" y="165">as You Do.</text>
+    <text class="sub" x="22" y="205">Founding routes now open — 24–48h turnaround with pro wash–dry–fold.</text>
+
+    <!-- icon chips -->
+    <g transform="translate(22,212)">
       <g>
-        <rect width="42" height="42" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
-        <circle cx="21" cy="21" r="12" stroke="#fff" fill="none" stroke-width="2"/>
-        <line x1="12" y1="18" x2="30" y2="18" stroke="#fff" stroke-width="2"/>
-        <line x1="14" y1="24" x2="28" y2="24" stroke="#fff" stroke-width="2"/>
+        <rect width="44" height="44" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
+        <circle cx="22" cy="22" r="12" stroke="#fff" fill="none" stroke-width="2"/>
+        <line x1="12" y1="19" x2="32" y2="19" stroke="#fff" stroke-width="2"/>
+        <line x1="14" y1="25" x2="30" y2="25" stroke="#fff" stroke-width="2"/>
       </g>
-      <g transform="translate(52,0)">
-        <rect width="42" height="42" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
-        <rect x="7" y="12" width="22" height="14" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
-        <rect x="30" y="16" width="8" height="10" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
-        <circle cx="15" cy="34" r="3" fill="#fff"/><circle cx="32" cy="34" r="3" fill="#fff"/>
+      <g transform="translate(54,0)">
+        <rect width="44" height="44" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
+        <rect x="8" y="12" width="22" height="14" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
+        <rect x="32" y="16" width="8" height="10" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
+        <circle cx="16" cy="35" r="3" fill="#fff"/><circle cx="33" cy="35" r="3" fill="#fff"/>
       </g>
-      <g transform="translate(104,0)">
-        <rect width="42" height="42" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
-        <circle cx="21" cy="23" r="12" fill="none" stroke="#fff" stroke-width="2"/>
-        <line x1="21" y1="10" x2="21" y2="7" stroke="#fff" stroke-width="2"/>
-        <line x1="21" y1="23" x2="21" y2="16" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-        <line x1="21" y1="23" x2="28" y2="23" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+      <g transform="translate(108,0)">
+        <rect width="44" height="44" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
+        <circle cx="22" cy="24" r="12" fill="none" stroke="#fff" stroke-width="2"/>
+        <line x1="22" y1="10" x2="22" y2="7" stroke="#fff" stroke-width="2"/>
+        <line x1="22" y1="24" x2="22" y2="16" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        <line x1="22" y1="24" x2="30" y2="24" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
       </g>
     </g>
   </g>
 
-  <!-- GRID -->
-  <g transform="translate(40,280)">
-    <!-- left card -->
-    <g filter="url(#cardShadow)">
-      <rect x="0" y="0" rx="18" ry="18" width="470" height="570" fill="#fff" stroke="#dce6ff"/>
+  <!-- GRID BODY -->
+  <g transform="translate(40,330)">
+    <!-- LEFT CARD -->
+    <g filter="url(#shadow)">
+      <rect x="0" y="0" rx="20" ry="20" width="500" height="600" fill="#fff" stroke="#dce6ff"/>
     </g>
-    <text class="h6" x="20" y="32">Transparent Pricing</text>
+    <text class="h6" x="24" y="36">Transparent Pricing</text>
 
     <!-- rows -->
     <g>
-      <g transform="translate(20,50)">
-        <rect rx="12" ry="12" width="430" height="64" fill="#f8fbff" stroke="#e7efff"/>
-        <text class="rowL" x="14" y="40">Standard Wash, Dry &amp; Fold</text>
-        <text class="rowR" x="402" y="40" text-anchor="end">$1.75/lb</text>
+      <g transform="translate(24,56)">
+        <rect rx="12" ry="12" width="452" height="70" fill="#f8fbff" stroke="#e7efff"/>
+        <text class="rowL" x="16" y="42">Standard Wash, Dry &amp; Fold</text>
+        <text class="rowR" x="435" y="42" text-anchor="end">$1.75/lb</text>
       </g>
-      <g transform="translate(20,120)">
-        <rect rx="12" ry="12" width="430" height="64" fill="#f8fbff" stroke="#e7efff"/>
-        <text class="rowL" x="14" y="40">Express Service</text>
-        <text class="rowR" x="402" y="40" text-anchor="end">$2.25/lb</text>
+      <g transform="translate(24,134)">
+        <rect rx="12" ry="12" width="452" height="70" fill="#f8fbff" stroke="#e7efff"/>
+        <text class="rowL" x="16" y="42">Express Service</text>
+        <text class="rowR" x="435" y="42" text-anchor="end">$2.25/lb</text>
       </g>
-      <g transform="translate(20,190)">
-        <rect rx="12" ry="12" width="430" height="64" fill="#f8fbff" stroke="#e7efff"/>
-        <text class="rowL" x="14" y="40">Minimum Order</text>
-        <text class="rowR" x="402" y="40" text-anchor="end">$35 min</text>
+      <g transform="translate(24,212)">
+        <rect rx="12" ry="12" width="452" height="70" fill="#f8fbff" stroke="#e7efff"/>
+        <text class="rowL" x="16" y="42">Minimum Order</text>
+        <text class="rowR" x="435" y="42" text-anchor="end">$35 min</text>
       </g>
     </g>
 
     <!-- bullets -->
-    <g class="bul" transform="translate(20,270)">
-      <circle cx="6" cy="6" r="4" fill="#063cb6"/><text x="18" y="10">We weigh laundry for accuracy</text>
-      <circle cx="6" cy="34" r="4" fill="#063cb6"/><text x="18" y="38">Free local pickup &amp; delivery</text>
+    <g class="bul" transform="translate(24,305)">
+      <circle cx="7" cy="6" r="5" fill="#063cb6"/><text x="22" y="11">We weigh laundry for accuracy</text>
+      <circle cx="7" cy="36" r="5" fill="#063cb6"/><text x="22" y="41">Free local pickup &amp; delivery</text>
     </g>
 
-    <!-- features row -->
-    <g transform="translate(20,330)">
+    <!-- features -->
+    <g transform="translate(24,372)">
       <g>
-        <rect rx="12" ry="12" width="134" height="90" fill="#fbfdff" stroke="#e6edff"/>
-        <text class="featT" x="10" y="26">Founding Perks</text>
-        <text class="featD" x="10" y="46">Early-bird slots +</text>
-        <text class="featD" x="10" y="62">priority routes.</text>
+        <rect rx="12" ry="12" width="144" height="96" fill="#fbfdff" stroke="#e6edff"/>
+        <text class="featT" x="12" y="28">Founding Perks</text>
+        <text class="featD" x="12" y="50">Early-bird slots +</text>
+        <text class="featD" x="12" y="68">priority routes.</text>
       </g>
-      <g transform="translate(148,0)">
-        <rect rx="12" ry="12" width="134" height="90" fill="#fbfdff" stroke="#e6edff"/>
-        <text class="featT" x="10" y="26">24–48h Turnaround</text>
-        <text class="featD" x="10" y="46">Rush upgrades when</text>
-        <text class="featD" x="10" y="62">needed.</text>
+      <g transform="translate(154,0)">
+        <rect rx="12" ry="12" width="144" height="96" fill="#fbfdff" stroke="#e6edff"/>
+        <text class="featT" x="12" y="28">24–48h Turnaround</text>
+        <text class="featD" x="12" y="50">Rush upgrades when</text>
+        <text class="featD" x="12" y="68">needed.</text>
       </g>
-      <g transform="translate(296,0)">
-        <rect rx="12" ry="12" width="134" height="90" fill="#fbfdff" stroke="#e6edff"/>
-        <text class="featT" x="10" y="26">Tiered Plans</text>
-        <text class="featD" x="10" y="46">Bundles for families &amp;</text>
-        <text class="featD" x="10" y="62">busy pros.</text>
+      <g transform="translate(308,0)">
+        <rect rx="12" ry="12" width="144" height="96" fill="#fbfdff" stroke="#e6edff"/>
+        <text class="featT" x="12" y="28">Tiered Plans</text>
+        <text class="featD" x="12" y="50">Bundles for families &amp;</text>
+        <text class="featD" x="12" y="68">busy pros.</text>
       </g>
     </g>
 
     <!-- CTA band -->
-    <g transform="translate(20,440)">
-      <linearGradient id="gb" x1="0" y1="0" x2="1" y2="0">
+    <g transform="translate(24,486)">
+      <linearGradient id="band" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0" stop-color="#eef5ff"/><stop offset="1" stop-color="#ecfff7"/>
       </linearGradient>
-      <rect rx="12" ry="12" width="430" height="50" fill="url(#gb)" stroke="#cfe0ff"/>
-      <text class="ctaBand" x="12" y="32">Be first to launch. Reply today to lock your route.</text>
+      <rect rx="12" ry="12" width="452" height="56" fill="url(#band)" stroke="#cfe0ff"/>
+      <text class="ctaBand" x="16" y="33">Be first to launch. Reply today to lock your route.</text>
     </g>
 
-    <!-- right card -->
-    <g transform="translate(500,0)">
-      <g filter="url(#cardShadow)"><rect x="0" y="0" rx="18" ry="18" width="270" height="250" fill="#fff" stroke="#dce6ff"/></g>
+    <!-- RIGHT CARD -->
+    <g transform="translate(536,0)">
+      <g filter="url(#shadow)"><rect x="0" y="0" rx="20" ry="20" width="274" height="260" fill="#fff" stroke="#dce6ff"/></g>
       <!-- tiny marks -->
-      <rect x="14" y="14" width="24" height="16" fill="rgba(6,60,182,.08)" stroke="#063cb6"/>
-      <rect x="44" y="14" width="24" height="16" fill="rgba(6,60,182,.08)" stroke="#063cb6"/>
+      <rect x="16" y="16" width="26" height="18" fill="rgba(6,60,182,.08)" stroke="#063cb6"/>
+      <rect x="46" y="16" width="26" height="18" fill="rgba(6,60,182,.08)" stroke="#063cb6"/>
       <!-- call box -->
-      <g transform="translate(14,40)">
-        <rect x="0" y="0" rx="14" ry="14" width="242" height="150" fill="#f6f9ff" stroke="#063cb6" stroke-width="2"/>
-        <text class="ctaText" x="121" y="26" text-anchor="middle">Text “SPIN” to</text>
-        <text class="ctaBig" x="121" y="64" text-anchor="middle">269-550-8801</text>
-        <text class="ctaText" x="121" y="95" text-anchor="middle">Book or Join the Waitlist</text>
-        <text class="ctaText" x="121" y="120" text-anchor="middle" fill="#0A6DFF">spinanddashlaundry@gmail.com</text>
+      <g transform="translate(16,44)">
+        <rect x="0" y="0" rx="14" ry="14" width="242" height="156" fill="#f6f9ff" stroke="#063cb6" stroke-width="2"/>
+        <text class="ctaTxt" x="121" y="28" text-anchor="middle">Text “SPIN” to</text>
+        <text class="ctaBig" x="121" y="70" text-anchor="middle">269-550-8801</text>
+        <text class="ctaTxt" x="121" y="100" text-anchor="middle">Book or Join the Waitlist</text>
+        <text class="ctaTxt" x="121" y="126" text-anchor="middle" fill="#0A6DFF">spinanddashlaundry@gmail.com</text>
       </g>
-      <text class="bul" x="14" y="218" fill="#6b7280">Fast response • Friendly service • Local team</text>
+      <text class="bul" x="16" y="232" fill="#6b7280">Fast response • Friendly service • Local team</text>
     </g>
   </g>
 
-  <!-- footer -->
+  <!-- FOOTER -->
   <text class="foot" x="425" y="1068" text-anchor="middle">© Spin & Dash Laundry • Female-Owned • Bonded & Insured • West Michigan</text>
 </svg>
 
 <script>
 function savePDF(){
-  // open a print-only tab containing just the Letter-sized SVG
-  const svg = document.getElementById('flyerSVG').outerHTML;
-  const html = `
-    <!doctype html><html><head><meta charset="utf-8">
-    <style>@page{size:Letter;margin:0}html,body{margin:0;background:#fff}</style>
-    </head><body>${svg}<script>setTimeout(()=>window.print(),200)<\/script></body></html>`;
-  const blob = new Blob([html], {type:'text/html'});
-  const url = URL.createObjectURL(blob);
-  const w = window.open(url, '_blank'); // DDG supports blob URLs better than data URIs
-  if(!w){ alert('If a blocker prevented opening the PDF view, use “Download SVG” instead.'); }
+  // open a print-only view with this exact SVG (guaranteed Letter page)
+  const svg = document.getElementById('flyer').outerHTML;
+  const html = `<!doctype html><meta charset="utf-8">
+    <style>@page{size:Letter;margin:0}html,body{margin:0;background:#fff}</style>${svg}
+    <script>setTimeout(()=>print(),200)<\/script>`;
+  const blob = new Blob([html], {type:'text/html'}), url = URL.createObjectURL(blob);
+  const w = open(url, '_blank'); if(!w){ alert('If a block occurs, use your browser menu → Share/Print.'); }
 }
-
 function downloadSVG(){
-  const svg = document.getElementById('flyerSVG').outerHTML;
-  const blob = new Blob([svg], {type:'image/svg+xml'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'SpinDash_Flyer_Letter.svg';
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url), 2000);
+  const svg = document.getElementById('flyer').outerHTML;
+  const blob = new Blob([svg], {type:'image/svg+xml'}), url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='SpinDash_Flyer_Letter.svg';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 </script>
-</body>
 </html>
