@@ -1,164 +1,244 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Spin & Dash Laundry — One-Page Flyer (Call-First)</title>
 <style>
+  /* ====== Hard one-page lock (Letter) ====== */
+  *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{margin:0;background:#eef4ff;color:#0b1220;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif}
+
   :root{
     --blue:#0A6DFF; --blueD:#063CB6; --ink:#0b1220; --muted:#5f6b7a;
-    --paper:#ffffff; --soft:#eff4ff; --green:#10b981; --radius:22px;
+    --paper:#ffffff; --green:#10b981; --radius:22px;
   }
-  *{box-sizing:border-box} html,body{margin:0;background:var(--soft);color:var(--ink);font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif}
 
-  /* ONE PAGE LETTER */
-  .sheet{width:816px;height:1056px;margin:24px auto;background:var(--paper);border-radius:20px;
-         box-shadow:0 18px 44px rgba(0,0,0,.14);overflow:hidden;display:flex;flex-direction:column}
-  .no-break{page-break-inside:avoid;break-inside:avoid}
+  /* The page itself: 8.5in x 11in with inner padding (no external margins) */
+  .sheet{
+    width:8.5in; height:11in;
+    margin:0 auto; background:var(--paper);
+    padding:0.5in;                /* visual margin INSIDE the page */
+    border-radius:0;              /* keep square in print to avoid bleed shifts */
+    box-shadow:0 18px 44px rgba(0,0,0,.14);
+    display:flex; flex-direction:column; gap:0.25in;
+    page-break-after:avoid; break-after:avoid;
+  }
+  .no-break{page-break-inside:avoid; break-inside:avoid}
 
-  /* HERO */
-  .hero{background:linear-gradient(135deg,var(--blueD),var(--blue));color:#fff;padding:28px 30px 22px}
-  .eyebar{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
-  .pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 10px;font-weight:700;font-size:12px}
-  .headline{margin:0;font-weight:900;font-size:42px;line-height:1.06;letter-spacing:.2px}
-  .sub{margin:8px 0 0;opacity:.96}
-  /* small hero icons */
-  .chips{display:flex;gap:10px;margin-top:10px}
-  .chip{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);
-        display:flex;align-items:center;justify-content:center}
+  /* ====== HERO ====== */
+  .hero{
+    background:linear-gradient(135deg,var(--blueD),var(--blue));
+    color:#fff; border-radius:0.18in; padding:0.35in;
+  }
+  .eyebar{display:flex;gap:0.08in;flex-wrap:wrap;margin:0 0 0.12in}
+  .pill{
+    background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3);
+    border-radius:9999px; padding:0.06in 0.12in; font-weight:700; font-size:0.12in;
+  }
+  .headline{margin:0; font-weight:900; line-height:1.06; letter-spacing:.2px; font-size:0.6in}
+  .sub{margin:0.08in 0 0; opacity:.96; font-size:0.18in}
+  .chips{display:flex;gap:0.1in;margin-top:0.12in}
+  .chip{
+    width:0.42in; height:0.42in; border-radius:0.12in;
+    background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.3);
+    display:flex; align-items:center; justify-content:center;
+  }
 
-  /* BODY */
-  .body{padding:18px 24px 16px;display:grid;grid-template-columns:1.4fr .9fr;gap:18px}
-  .card{border:1px solid #dce6ff;border-radius:18px;background:#fff;box-shadow:0 10px 22px rgba(0,0,0,.08)}
-  .pad{padding:16px 18px}
-  .h6{margin:0 0 8px;color:#233b79;font-weight:800}
+  /* ====== BODY GRID ====== */
+  .grid{
+    display:grid; grid-template-columns:1.6fr 1fr; gap:0.2in;
+  }
 
-  /* pricing */
-  .rows{display:grid;gap:10px}
-  .row{display:grid;grid-template-columns:1fr auto;gap:12px;background:#f8fbff;border:1px solid #e7efff;padding:12px 14px;border-radius:12px}
-  .row b{font-weight:800}.amt{font-weight:900}
-  ul.bul{margin:10px 0 0 18px} ul.bul li{margin:6px 0}
+  .card{
+    border:1px solid #dce6ff; border-radius:0.18in; background:#fff;
+    box-shadow:0 10px 22px rgba(0,0,0,.08);
+  }
+  .pad{padding:0.2in}
 
-  /* features */
-  .ribbon{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
-  .feat{display:flex;gap:8px;align-items:flex-start;padding:10px;border:1px solid #e6edff;border-radius:12px;background:linear-gradient(180deg,#fbfdff,#f4f8ff)}
+  /* Pricing block */
+  .h6{margin:0 0 0.08in; color:#233b79; font-weight:800; font-size:0.22in}
+  .rows{display:grid; gap:0.08in}
+  .row{
+    display:grid; grid-template-columns:1fr auto; gap:0.12in;
+    background:#f8fbff; border:1px solid #e7efff; padding:0.14in; border-radius:0.14in;
+  }
+  .row b{font-weight:800} .amt{font-weight:900}
+  ul.bul{margin:0.12in 0 0 0.18in} ul.bul li{margin:0.06in 0}
+
+  /* Feature ribbon */
+  .ribbon{display:grid; grid-template-columns:repeat(3,1fr); gap:0.1in; margin-top:0.12in}
+  .feat{
+    display:flex; gap:0.08in; align-items:flex-start; padding:0.12in;
+    border:1px solid #e6edff; border-radius:0.14in;
+    background:linear-gradient(180deg,#fbfdff,#f4f8ff);
+  }
   .feat b{color:var(--blueD)}
 
-  /* CALL PANEL (replaces QR) */
-  .call{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
-  .mark{display:flex;gap:8px}
-  .mark svg{filter:drop-shadow(0 6px 16px rgba(0,0,0,.18))}
-  .ctaBox{width:100%;border:2px solid var(--blueD);border-radius:18px;background:#f6f9ff;box-shadow:0 10px 24px rgba(0,0,0,.06);padding:16px}
-  .ctaText{font-size:18px;font-weight:800;margin:0 0 6px;color:#334}
-  .bigNum{font-size:34px;font-weight:900;color:var(--blueD);letter-spacing:.5px}
-  .alt{margin-top:6px;font-size:13px;color:#6b7280}
-  .btn{margin-top:10px;display:inline-block;padding:12px 16px;border-radius:12px;background:var(--green);color:#063;font-weight:900;text-decoration:none}
-
-  /* CTA band under pricing */
-  .ctaBand{margin-top:10px;border:1px solid #cfe0ff;border-radius:14px;background:linear-gradient(90deg,#eef5ff,#ecfff7);padding:12px 14px;font-weight:700}
-  .ctaBand a{color:var(--blueD);text-decoration:none}
-
-  /* footer */
-  .footer{margin:10px 24px 16px;text-align:center;color:#6b7280;font-size:13px}
-
-  /* PRINT */
-  @media print{
-    @page{size:Letter;margin:12mm}
-    html,body{background:#fff}
-    .sheet{margin:0;box-shadow:none}
+  /* Call-first panel */
+  .call{display:flex; flex-direction:column; gap:0.14in}
+  .mark{display:flex; gap:0.08in}
+  .ctaBox{
+    border:2px solid var(--blueD); border-radius:0.18in; background:#f6f9ff;
+    box-shadow:0 10px 24px rgba(0,0,0,.06); padding:0.18in; text-align:center;
+  }
+  .ctaText{margin:0 0 0.06in; font-size:0.22in; font-weight:800; color:#334}
+  .bigNum{font-size:0.36in; font-weight:900; color:var(--blueD); letter-spacing:.5px}
+  .alt{margin-top:0.06in; font-size:0.16in; color:#6b7280}
+  .btn{
+    margin-top:0.08in; display:inline-block; padding:0.12in 0.16in; border-radius:0.12in;
+    background:var(--green); color:#063; font-weight:900; text-decoration:none;
   }
 
-  /* Mobile fallback view */
-  @media (max-width:860px){.sheet{width:auto;height:auto;margin:0;border-radius:0}.body{grid-template-columns:1fr}}
+  .ctaBand{
+    margin-top:0.12in; border:1px solid #cfe0ff; border-radius:0.14in;
+    background:linear-gradient(90deg,#eef5ff,#ecfff7); padding:0.12in 0.14in; font-weight:700;
+  }
+  .ctaBand a{color:var(--blueD); text-decoration:none}
+
+  /* Footer */
+  .footer{text-align:center; color:#6b7280; font-size:0.14in}
+
+  /* ====== PRINT RULES ====== */
+  @media print{
+    @page{ size:Letter; margin:0 }            /* no outer margins; we padded .sheet */
+    html,body{ background:#fff }
+    .sheet{ margin:0 !important; box-shadow:none !important }
+    .print-hide{ display:none !important }     /* hide the on-screen button */
+    /* If a device still tries to split, uncomment these two lines:
+    .sheet{ transform:scale(.98); transform-origin:top left }
+    */
+  }
+
+  /* Mobile viewing (scrolling allowed, PDF still locks to 1 page) */
+  @media (max-width:900px){
+    .sheet{width:100vw; height:auto; min-height:100vh; padding:4vw}
+    .grid{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
-  <main class="sheet no-break">
-    <!-- HERO -->
-    <header class="hero no-break">
-      <div class="eyebar">
-        <span class="pill">West Michigan</span>
-        <span class="pill">Female-Owned</span>
-        <span class="pill">Bonded & Insured</span>
+
+<main class="sheet no-break">
+  <!-- ===== HERO ===== -->
+  <header class="hero no-break">
+    <div class="eyebar">
+      <span class="pill">West Michigan</span>
+      <span class="pill">Female-Owned</span>
+      <span class="pill">Bonded & Insured</span>
+    </div>
+    <h1 class="headline">Laundry That Moves as Fast as You Do.</h1>
+    <p class="sub">Founding routes now open — 24–48h turnaround with pro wash–dry–fold.</p>
+
+    <div class="chips" aria-hidden="true">
+      <div class="chip">
+        <!-- basket -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="2"/>
+          <path d="M7 10h10M8 13h8M9 16h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
       </div>
-      <h1 class="headline">Laundry That Moves as Fast as You Do.</h1>
-      <p class="sub">Founding routes now open — 24–48h turnaround with pro wash–dry–fold.</p>
-      <div class="chips" aria-hidden="true">
-        <div class="chip">
-          <!-- basket -->
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#fff" stroke-width="2"/><path d="M7 10h10M8 13h8M9 16h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+      <div class="chip">
+        <!-- van -->
+        <svg width="24" height="16" viewBox="0 0 64 40" fill="none">
+          <rect x="2" y="10" width="42" height="18" rx="3" stroke="white" stroke-width="2" fill="rgba(255,255,255,.08)"/>
+          <rect x="44" y="16" width="12" height="12" rx="2" stroke="white" stroke-width="2" fill="rgba(255,255,255,.08)"/>
+          <circle cx="16" cy="32" r="3" fill="#fff"/><circle cx="50" cy="32" r="3" fill="#fff"/>
+        </svg>
+      </div>
+      <div class="chip">
+        <!-- stopwatch -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="13" r="7" stroke="#fff" stroke-width="2"/>
+          <line x1="12" y1="5" x2="12" y2="3" stroke="#fff" stroke-width="2"/>
+          <line x1="12" y1="13" x2="12" y2="9" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+          <line x1="12" y1="13" x2="15" y2="13" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== BODY ===== -->
+  <section class="grid no-break">
+    <!-- Left: pricing & benefits -->
+    <div class="card pad no-break">
+      <h3 class="h6">Transparent Pricing</h3>
+      <div class="rows">
+        <div class="row"><b>Standard Wash, Dry &amp; Fold</b><div class="amt">$1.75/lb</div></div>
+        <div class="row"><b>Express Service</b><div class="amt">$2.25/lb</div></div>
+        <div class="row"><b>Minimum Order</b><div class="amt">$35 min</div></div>
+      </div>
+      <ul class="bul">
+        <li>We weigh laundry for accuracy</li>
+        <li>Free local pickup &amp; delivery</li>
+      </ul>
+
+      <div class="ribbon">
+        <div class="feat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M4 12l4 4 12-12" stroke="#10b981" stroke-width="2"/></svg>
+          <div><b>Founding Perks</b><br/>Early-bird slots + priority routes.</div>
         </div>
-        <div class="chip">
-          <!-- van -->
-          <svg width="24" height="16" viewBox="0 0 64 40" fill="none"><rect x="2" y="10" width="42" height="18" rx="3" stroke="#fff" stroke-width="2" fill="rgba(255,255,255,.08)"/><rect x="44" y="16" width="12" height="12" rx="2" stroke="#fff" stroke-width="2" fill="rgba(255,255,255,.08)"/><circle cx="16" cy="32" r="3" fill="#fff"/><circle cx="50" cy="32" r="3" fill="#fff"/></svg>
+        <div class="feat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="#063cb6" stroke-width="2"/></svg>
+          <div><b>24–48h Turnaround</b><br/>Rush upgrades when needed.</div>
         </div>
-        <div class="chip">
-          <!-- stopwatch -->
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="7" stroke="#fff" stroke-width="2"/><line x1="12" y1="5" x2="12" y2="3" stroke="#fff" stroke-width="2"/><line x1="12" y1="13" x2="12" y2="9" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="13" x2="15" y2="13" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        <div class="feat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l4 8-4 12-4-12 4-8z" stroke="#ef4444" stroke-width="2"/></svg>
+          <div><b>Tiered Plans</b><br/>Bundles for families &amp; busy pros.</div>
         </div>
       </div>
-    </header>
 
-    <!-- BODY -->
-    <section class="body no-break">
-      <!-- Left: pricing & benefits -->
-      <div class="card pad no-break">
-        <h3 class="h6">Transparent Pricing</h3>
-        <div class="rows">
-          <div class="row"><b>Standard Wash, Dry & Fold</b><div class="amt">$1.75/lb</div></div>
-          <div class="row"><b>Express Service</b><div class="amt">$2.25/lb</div></div>
-          <div class="row"><b>Minimum Order</b><div class="amt">$35 min</div></div>
-        </div>
-        <ul class="bul">
-          <li>We weigh laundry for accuracy</li>
-          <li>Free local pickup & delivery</li>
-        </ul>
+      <div class="ctaBand">
+        Be first to launch. Reply today to lock your route.
+      </div>
+    </div>
 
-        <div class="ribbon">
-          <div class="feat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12l4 4 12-12" stroke="#10b981" stroke-width="2"/></svg><div><b>Founding Perks</b><br/>Early-bird slots + priority routes.</div></div>
-          <div class="feat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#063cb6" stroke-width="2"/></svg><div><b>24–48h Turnaround</b><br/>Rush upgrades when needed.</div></div>
-          <div class="feat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l4 8-4 12-4-12 4-8z" stroke="#ef4444" stroke-width="2"/></svg><div><b>Tiered Plans</b><br/>Bundles for families & busy pros.</div></div>
-        </div>
-
-        <div class="ctaBand">Be first to launch. Reply today to lock your route.</div>
+    <!-- Right: call-first panel -->
+    <aside class="card pad call no-break">
+      <div class="mark" aria-hidden="true">
+        <!-- phone -->
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+          <path d="M6 2h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4c0 1-1 2-2 2A17 17 0 0 1 4 6c0-1 1-2 2-2Z"
+                stroke="#063cb6" stroke-width="2" fill="rgba(6,60,182,.08)"/>
+        </svg>
+        <!-- chat -->
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+          <path d="M4 4h16v10H7l-3 3V4Z"
+                stroke="#063cb6" stroke-width="2" fill="rgba(6,60,182,.08)"/>
+        </svg>
       </div>
 
-      <!-- Right: CALL-FIRST panel -->
-      <aside class="card pad call no-break">
-        <div class="mark" aria-hidden="true">
-          <!-- phone icon -->
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-            <path d="M6 2h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4c0 1-1 2-2 2A17 17 0 0 1 4 6c0-1 1-2 2-2Z" stroke="#063cb6" stroke-width="2" fill="rgba(6,60,182,.08)"/>
-          </svg>
-          <!-- chat bubble -->
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-            <path d="M4 4h16v10H7l-3 3V4Z" stroke="#063cb6" stroke-width="2" fill="rgba(6,60,182,.08)"/>
-          </svg>
-        </div>
+      <div class="ctaBox">
+        <p class="ctaText">Text <span style="color:#063cb6">“SPIN”</span> to</p>
+        <div class="bigNum">269-550-8801</div>
+        <p class="ctaText" style="margin-top:0.08in">Book or Join the Waitlist</p>
+        <div class="alt">Prefer email? <a href="mailto:spinanddashlaundry@gmail.com"
+            style="color:#063cb6;text-decoration:none;font-weight:800">spinanddashlaundry@gmail.com</a></div>
+        <a class="btn" href="tel:+12695508801">Tap to Call</a>
+      </div>
 
-        <div class="ctaBox">
-          <p class="ctaText">Text <span style="color:#063cb6">“SPIN”</span> to</p>
-          <div class="bigNum">269-550-8801</div>
-          <p class="ctaText" style="margin-top:8px">Book or Join the Waitlist</p>
-          <div class="alt">Prefer email? <a href="mailto:spinanddashlaundry@gmail.com" style="color:#063cb6;text-decoration:none;font-weight:800">spinanddashlaundry@gmail.com</a></div>
-          <a class="btn" href="tel:+12695508801">Tap to Call</a>
-        </div>
+      <div class="alt">Fast response • Friendly service • Local team</div>
+    </aside>
+  </section>
 
-        <div class="alt">Fast response • Friendly service • Local team</div>
-      </aside>
-    </section>
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer no-break">
+    © Spin &amp; Dash Laundry • Female-Owned • Bonded &amp; Insured • West Michigan
+  </footer>
+</main>
 
-    <!-- FOOTER -->
-    <footer class="footer no-break">© Spin & Dash Laundry • Female-Owned • Bonded & Insured • West Michigan</footer>
-  </main>
-</body>
-</html>
-
-<button
+<!-- On-screen button (hidden in print) -->
+<button class="print-hide"
   onclick="window.print()"
   style="position:fixed;right:14px;bottom:14px;z-index:999;
-         background:#10b981;color:#063;border:0;border-radius:12px;
+         background:#0A6DFF;color:#fff;border:0;border-radius:12px;
          padding:12px 16px;font-weight:900;
          box-shadow:0 8px 22px rgba(0,0,0,.18)">
-  Download / Print PDF
+  Download PDF
 </button>
+
+</body>
+</html>
