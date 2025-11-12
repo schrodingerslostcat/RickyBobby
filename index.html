@@ -2,185 +2,190 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Spin & Dash — Flyer (Letter SVG)</title>
+<title>Spin & Dash — Promo Flyer (Letter SVG)</title>
 <style>
-  html,body{margin:0;background:#eef4ff}
-  .frame{max-width:900px;margin:12px auto;padding:8px}
-  .note{font:600 12px/1.4 system-ui,Segoe UI,Arial;color:#334;margin:6px 8px}
+  html,body{margin:0;background:#eaf6fb}
+  .hint{font:600 12px system-ui,Segoe UI,Arial;color:#334;margin:10px auto 0;max-width:900px;padding:0 10px}
   @media print{@page{size:Letter;margin:0}html,body{background:#fff}}
 </style>
-<div class="frame">
-  <div class="note">Tip: in the print sheet choose “Margins: None” and (if shown) enable “Background graphics”.</div>
-</div>
+<div class="hint">Print tip: Margins = None. If “Background graphics” is shown, enable it.</div>
 
-<!-- EXACT Letter size -->
-<svg id="flyer" xmlns="http://www.w3.org/2000/svg" width="8.5in" height="11in" viewBox="0 0 850 1100">
+<!-- EXACT LETTER SIZE -->
+<svg xmlns="http://www.w3.org/2000/svg" width="8.5in" height="11in" viewBox="0 0 850 1100">
   <defs>
-    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#063CB6"/><stop offset="1" stop-color="#0A6DFF"/>
+    <!-- teal gradient background -->
+    <linearGradient id="bg" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#BFF0F7"/>
+      <stop offset="1" stop-color="#70D1E6"/>
+    </linearGradient>
+    <linearGradient id="stripe" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1E77DF"/>
+      <stop offset="1" stop-color="#0A59C8"/>
+    </linearGradient>
+    <linearGradient id="cta" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#18488B"/><stop offset="1" stop-color="#0F2F66"/>
     </linearGradient>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity=".12"/>
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#002447" flood-opacity=".25"/>
     </filter>
     <style>
-      .h1{font:900 54px/1.06 Inter,Segoe UI,Arial;fill:#fff}
-      .sub{font:500 18px/1.5 Inter,Segoe UI,Arial;fill:#eaf3ff}
-      .pill{font:800 12px Inter,Segoe UI,Arial;fill:#fff}
-      .h6{font:900 20px Inter,Segoe UI,Arial;fill:#223a78}
-      .rowL{font:800 16px Inter,Segoe UI,Arial;fill:#0b1220}
-      .rowR{font:900 18px Inter,Segoe UI,Arial;fill:#0b1220}
-      .bul{font:500 14px Inter,Segoe UI,Arial;fill:#0b1220}
-      .featT{font:900 14px Inter,Segoe UI,Arial;fill:#063cb6}
-      .featD{font:500 13px Inter,Segoe UI,Arial;fill:#0b1220}
-      .ctaBand{font:900 15px Inter,Segoe UI,Arial;fill:#063cb6}
-      .ctaBig{font:900 28px Inter,Segoe UI,Arial;fill:#063cb6}
-      .ctaTxt{font:800 16px Inter,Segoe UI,Arial;fill:#334}
-      .foot{font:600 12px Inter,Segoe UI,Arial;fill:#6b7280}
+      .h1{font:900 54px/1.06 Inter,Segoe UI,Arial;fill:#103253}
+      .h2{font:900 28px/1.25 Inter,Segoe UI,Arial;fill:#103253;letter-spacing:.03em}
+      .h3{font:900 20px/1.2 Inter,Segoe UI,Arial;fill:#0d2b52}
+      .tiny{font:700 12px Inter,Segoe UI,Arial;fill:#0d2b52}
+      .white{fill:#fff}
+      .muted{fill:#234a6d}
+      .dark{fill:#0d2b52}
+      .pill{font:800 12px Inter,Segoe UI,Arial;fill:#0d2b52}
+      .priceL{font:900 24px Inter,Segoe UI,Arial;fill:#ffffff}
+      .priceR{font:900 28px Inter,Segoe UI,Arial;fill:#ffffff}
+      .featT{font:900 14px Inter,Segoe UI,Arial;fill:#0d2b52}
+      .featD{font:600 12px Inter,Segoe UI,Arial;fill:#0d2b52}
+      .footer{font:900 32px Inter,Segoe UI,Arial;fill:#fff;letter-spacing:.04em}
+      .handle{font:900 18px Inter,Segoe UI,Arial;fill:#fff;letter-spacing:.08em}
+      .caption{font:700 12px Inter,Segoe UI,Arial;fill:#234a6d}
     </style>
   </defs>
 
-  <!-- paper -->
-  <rect x="0" y="0" width="850" height="1100" fill="#fff"/>
-
-  <!-- HERO -->
-  <g transform="translate(40,40)">
-    <rect x="0" y="0" rx="22" ry="22" width="770" height="260" fill="url(#hero)"/>
-    <!-- pills -->
-    <g transform="translate(22,18)">
-      <g><rect rx="999" ry="999" width="118" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">West Michigan</text></g>
-      <g transform="translate(130,0)"><rect rx="999" ry="999" width="116" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">Female-Owned</text></g>
-      <g transform="translate(250,0)"><rect rx="999" ry="999" width="136" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">Bonded &amp; Insured</text></g>
-    </g>
-
-    <text class="h1" x="22" y="110">Laundry That Moves as Fast</text>
-    <text class="h1" x="22" y="165">as You Do.</text>
-    <text class="sub" x="22" y="205">Founding routes now open — 24–48h turnaround with pro wash–dry–fold.</text>
-
-    <!-- icon chips -->
-    <g transform="translate(22,212)">
-      <g>
-        <rect width="44" height="44" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
-        <circle cx="22" cy="22" r="12" stroke="#fff" fill="none" stroke-width="2"/>
-        <line x1="12" y1="19" x2="32" y2="19" stroke="#fff" stroke-width="2"/>
-        <line x1="14" y1="25" x2="30" y2="25" stroke="#fff" stroke-width="2"/>
-      </g>
-      <g transform="translate(54,0)">
-        <rect width="44" height="44" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
-        <rect x="8" y="12" width="22" height="14" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
-        <rect x="32" y="16" width="8" height="10" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
-        <circle cx="16" cy="35" r="3" fill="#fff"/><circle cx="33" cy="35" r="3" fill="#fff"/>
-      </g>
-      <g transform="translate(108,0)">
-        <rect width="44" height="44" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
-        <circle cx="22" cy="24" r="12" fill="none" stroke="#fff" stroke-width="2"/>
-        <line x1="22" y1="10" x2="22" y2="7" stroke="#fff" stroke-width="2"/>
-        <line x1="22" y1="24" x2="22" y2="16" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-        <line x1="22" y1="24" x2="30" y2="24" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-      </g>
-    </g>
+  <!-- background with bubbles -->
+  <rect x="0" y="0" width="850" height="1100" fill="url(#bg)"/>
+  <g opacity=".18" fill="#fff">
+    <circle cx="90" cy="120" r="10"/><circle cx="170" cy="80" r="18"/>
+    <circle cx="280" cy="160" r="8"/><circle cx="700" cy="130" r="14"/>
+    <circle cx="620" cy="220" r="10"/><circle cx="520" cy="90" r="9"/>
+    <circle cx="770" cy="260" r="8"/><circle cx="110" cy="280" r="12"/>
+    <circle cx="790" cy="980" r="12"/><circle cx="120" cy="980" r="10"/>
   </g>
 
-  <!-- GRID BODY -->
-  <g transform="translate(40,330)">
-    <!-- LEFT CARD -->
-    <g filter="url(#shadow)">
-      <rect x="0" y="0" rx="20" ry="20" width="500" height="600" fill="#fff" stroke="#dce6ff"/>
+  <!-- LOGO + NAME -->
+  <g transform="translate(60,90)">
+    <!-- simple circular logo -->
+    <g transform="translate(0,0)">
+      <circle cx="0" cy="0" r="30" fill="none" stroke="#0d2b52" stroke-width="8"/>
+      <circle cx="0" cy="0" r="22" fill="none" stroke="#0d2b52" stroke-width="4"/>
+      <path d="M-10,-6 h20 a6,6 0 0 1 0,12 h-20 a6,6 0 0 1 0,-12z" fill="#0d2b52"/>
     </g>
-    <text class="h6" x="24" y="36">Transparent Pricing</text>
+    <text x="55" y="8" class="h2">SPIN &amp; DASH</text>
+  </g>
 
-    <!-- rows -->
+  <!-- HEADLINE -->
+  <g transform="translate(60,180)">
+    <text class="h1">LAUNDRY THAT</text>
+    <text y="60" class="h1">MOVES AS FAST</text>
+    <text y="120" class="h1">AS YOU DO.</text>
+  </g>
+
+  <!-- SPEED VAN -->
+  <g transform="translate(60,360)" fill="#0d2b52">
+    <!-- streaks -->
+    <rect x="130" y="40" width="100" height="8" opacity=".45"/>
+    <rect x="100" y="56" width="140" height="8" opacity=".35"/>
+    <rect x="80" y="72" width="170" height="8" opacity=".25"/>
+    <rect x="60" y="88" width="190" height="8" opacity=".18"/>
+    <!-- van -->
+    <path d="M250,40 h120 a8,8 0 0 1 8,8 v50 a8,8 0 0 1 -8,8 h-220 v-30 a20,20 0 0 1 20,-20 h60 l12,-16 h28z" />
+    <!-- basket on van -->
+    <rect x="290" y="60" width="44" height="22" rx="4" fill="#e6f4ff"/>
+    <rect x="286" y="52" width="52" height="8" rx="2" fill="#e6f4ff"/>
+    <circle cx="190" cy="110" r="16" fill="#0d2b52"/><circle cx="190" cy="110" r="8" fill="#fff"/>
+    <circle cx="330" cy="110" r="16" fill="#0d2b52"/><circle cx="330" cy="110" r="8" fill="#fff"/>
+  </g>
+
+  <!-- SUBHEAD -->
+  <g transform="translate(60,500)">
+    <text class="h3">PROUDLY SERVING WEST MICHIGAN — WITHIN</text>
+    <text y="28" class="h3">20 MILES OF KALAMAZOO</text>
+  </g>
+
+  <!-- two badges -->
+  <g transform="translate(60,560)" class="dark">
+    <!-- female owned -->
     <g>
-      <g transform="translate(24,56)">
-        <rect rx="12" ry="12" width="452" height="70" fill="#f8fbff" stroke="#e7efff"/>
-        <text class="rowL" x="16" y="42">Standard Wash, Dry &amp; Fold</text>
-        <text class="rowR" x="435" y="42" text-anchor="end">$1.75/lb</text>
-      </g>
-      <g transform="translate(24,134)">
-        <rect rx="12" ry="12" width="452" height="70" fill="#f8fbff" stroke="#e7efff"/>
-        <text class="rowL" x="16" y="42">Express Service</text>
-        <text class="rowR" x="435" y="42" text-anchor="end">$2.25/lb</text>
-      </g>
-      <g transform="translate(24,212)">
-        <rect rx="12" ry="12" width="452" height="70" fill="#f8fbff" stroke="#e7efff"/>
-        <text class="rowL" x="16" y="42">Minimum Order</text>
-        <text class="rowR" x="435" y="42" text-anchor="end">$35 min</text>
-      </g>
+      <circle cx="12" cy="12" r="12" fill="#0d2b52" opacity=".1"/>
+      <path d="M8,12 a4,4 0 1 0 8,0 a4,4 0 1 0 -8,0" fill="#0d2b52"/>
+      <text x="28" y="7" class="pill">FEMALE OWNED</text>
+      <text x="28" y="24" class="tiny">&amp; LOCALLY OPERATED</text>
     </g>
-
-    <!-- bullets -->
-    <g class="bul" transform="translate(24,305)">
-      <circle cx="7" cy="6" r="5" fill="#063cb6"/><text x="22" y="11">We weigh laundry for accuracy</text>
-      <circle cx="7" cy="36" r="5" fill="#063cb6"/><text x="22" y="41">Free local pickup &amp; delivery</text>
-    </g>
-
-    <!-- features -->
-    <g transform="translate(24,372)">
-      <g>
-        <rect rx="12" ry="12" width="144" height="96" fill="#fbfdff" stroke="#e6edff"/>
-        <text class="featT" x="12" y="28">Founding Perks</text>
-        <text class="featD" x="12" y="50">Early-bird slots +</text>
-        <text class="featD" x="12" y="68">priority routes.</text>
-      </g>
-      <g transform="translate(154,0)">
-        <rect rx="12" ry="12" width="144" height="96" fill="#fbfdff" stroke="#e6edff"/>
-        <text class="featT" x="12" y="28">24–48h Turnaround</text>
-        <text class="featD" x="12" y="50">Rush upgrades when</text>
-        <text class="featD" x="12" y="68">needed.</text>
-      </g>
-      <g transform="translate(308,0)">
-        <rect rx="12" ry="12" width="144" height="96" fill="#fbfdff" stroke="#e6edff"/>
-        <text class="featT" x="12" y="28">Tiered Plans</text>
-        <text class="featD" x="12" y="50">Bundles for families &amp;</text>
-        <text class="featD" x="12" y="68">busy pros.</text>
-      </g>
-    </g>
-
-    <!-- CTA band -->
-    <g transform="translate(24,486)">
-      <linearGradient id="band" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stop-color="#eef5ff"/><stop offset="1" stop-color="#ecfff7"/>
-      </linearGradient>
-      <rect rx="12" ry="12" width="452" height="56" fill="url(#band)" stroke="#cfe0ff"/>
-      <text class="ctaBand" x="16" y="33">Be first to launch. Reply today to lock your route.</text>
-    </g>
-
-    <!-- RIGHT CARD -->
-    <g transform="translate(536,0)">
-      <g filter="url(#shadow)"><rect x="0" y="0" rx="20" ry="20" width="274" height="260" fill="#fff" stroke="#dce6ff"/></g>
-      <!-- tiny marks -->
-      <rect x="16" y="16" width="26" height="18" fill="rgba(6,60,182,.08)" stroke="#063cb6"/>
-      <rect x="46" y="16" width="26" height="18" fill="rgba(6,60,182,.08)" stroke="#063cb6"/>
-      <!-- call box -->
-      <g transform="translate(16,44)">
-        <rect x="0" y="0" rx="14" ry="14" width="242" height="156" fill="#f6f9ff" stroke="#063cb6" stroke-width="2"/>
-        <text class="ctaTxt" x="121" y="28" text-anchor="middle">Text “SPIN” to</text>
-        <text class="ctaBig" x="121" y="70" text-anchor="middle">269-550-8801</text>
-        <text class="ctaTxt" x="121" y="100" text-anchor="middle">Book or Join the Waitlist</text>
-        <text class="ctaTxt" x="121" y="126" text-anchor="middle" fill="#0A6DFF">spinanddashlaundry@gmail.com</text>
-      </g>
-      <text class="bul" x="16" y="232" fill="#6b7280">Fast response • Friendly service • Local team</text>
+    <!-- bonded -->
+    <g transform="translate(260,0)">
+      <path d="M12,4 l14,8 v10 l-14,8 l-14,-8 v-10z" fill="#0d2b52" opacity=".12"/>
+      <path d="M12,6 l12,7 v8 l-12,7 l-12,-7 v-8z" fill="none" stroke="#0d2b52" stroke-width="2"/>
+      <text x="34" y="7" class="pill">BONDED &amp; INSURED</text>
+      <text x="34" y="24" class="tiny">FOR YOUR PEACE OF MIND</text>
     </g>
   </g>
 
-  <!-- FOOTER -->
-  <text class="foot" x="425" y="1068" text-anchor="middle">© Spin & Dash Laundry • Female-Owned • Bonded & Insured • West Michigan</text>
-</svg>
+  <!-- PRICING STRIPE -->
+  <g transform="translate(60,640)" filter="url(#shadow)">
+    <rect x="0" y="0" rx="18" ry="18" width="730" height="140" fill="url(#stripe)"/>
+    <g transform="translate(18,28)">
+      <text class="priceL">Standard</text>
+      <text y="32" class="priceL">Express</text>
+    </g>
+    <g transform="translate(290,28)" text-anchor="middle">
+      <text class="priceR">$1.75/lb</text>
+      <text y="32" class="priceR">$2.25/lb</text>
+    </g>
+    <g transform="translate(540,28)">
+      <text class="priceR">48-Hour</text>
+      <text y="32" class="priceR">TURNAROUND</text>
+    </g>
+  </g>
 
-<script>
-function savePDF(){
-  // open a print-only view with this exact SVG (guaranteed Letter page)
-  const svg = document.getElementById('flyer').outerHTML;
-  const html = `<!doctype html><meta charset="utf-8">
-    <style>@page{size:Letter;margin:0}html,body{margin:0;background:#fff}</style>${svg}
-    <script>setTimeout(()=>print(),200)<\/script>`;
-  const blob = new Blob([html], {type:'text/html'}), url = URL.createObjectURL(blob);
-  const w = open(url, '_blank'); if(!w){ alert('If a block occurs, use your browser menu → Share/Print.'); }
-}
-function downloadSVG(){
-  const svg = document.getElementById('flyer').outerHTML;
-  const blob = new Blob([svg], {type:'image/svg+xml'}), url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href=url; a.download='SpinDash_Flyer_Letter.svg';
-  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
-</script>
+  <!-- three feature icons -->
+  <g transform="translate(60,820)">
+    <!-- weigh -->
+    <g>
+      <rect x="0" y="0" width="220" height="70" rx="14" fill="#ffffff" opacity=".65" stroke="#9ac7ea"/>
+      <path d="M24,46 h40 v-12 h-40z M24,34 h40 l-10,-14 h-20z" fill="#0d2b52" opacity=".9"/>
+      <text x="76" y="26" class="featT">WE WEIGH</text>
+      <text x="76" y="46" class="featD">LAUNDRY FOR ACCURACY</text>
+    </g>
+    <!-- 48-hour -->
+    <g transform="translate(250,0)">
+      <rect x="0" y="0" width="220" height="70" rx="14" fill="#ffffff" opacity=".65" stroke="#9ac7ea"/>
+      <circle cx="30" cy="36" r="16" fill="none" stroke="#0d2b52" stroke-width="3"/>
+      <path d="M30,36 v-10 M30,36 h10" stroke="#0d2b52" stroke-width="3"/>
+      <text x="76" y="26" class="featT">48-HOUR</text>
+      <text x="76" y="46" class="featD">TURNAROUND</text>
+    </g>
+    <!-- pickup -->
+    <g transform="translate(500,0)">
+      <rect x="0" y="0" width="220" height="70" rx="14" fill="#ffffff" opacity=".65" stroke="#9ac7ea"/>
+      <rect x="14" y="28" width="44" height="20" rx="3" fill="#0d2b52"/>
+      <rect x="60" y="32" width="10" height="12" rx="2" fill="#0d2b52"/>
+      <circle cx="30" cy="54" r="6" fill="#0d2b52"/><circle cx="54" cy="54" r="6" fill="#0d2b52"/>
+      <text x="76" y="26" class="featT">FREE</text>
+      <text x="76" y="46" class="featD">LOCAL PICKUP</text>
+    </g>
+  </g>
+
+  <!-- QR + CTA -->
+  <g transform="translate(60,910)">
+    <!-- QR placeholder (replace later with your real QR as <image href="data:image/png;base64,...">) -->
+    <g>
+      <rect x="0" y="0" width="120" height="120" rx="12" fill="#fff" stroke="#2c4f7a"/>
+      <rect x="16" y="16" width="88" height="88" fill="#dbe9f7" stroke="#2c4f7a" stroke-dasharray="4 4"/>
+      <text x="60" y="114" text-anchor="middle" class="caption">$CAN TO BOOK PICKUP</text>
+    </g>
+
+    <!-- big CTA on right -->
+    <g transform="translate(150,-4)" filter="url(#shadow)">
+      <rect x="0" y="0" rx="28" ry="28" width="580" height="128" fill="url(#cta)"/>
+      <text x="290" y="50" text-anchor="middle" class="footer">FAST. FRESH. FOLDED. DELIVERED.</text>
+      <g transform="translate(0,74)">
+        <rect x="220" y="-6" rx="18" ry="18" width="160" height="36" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.28)"/>
+        <text x="300" y="16" text-anchor="middle" class="handle">@SPINANDASHLAUNDRY</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- CONTACT STRIP -->
+  <g transform="translate(60,1060)">
+    <text class="tiny">Call/Text </text>
+    <text x="60" class="tiny" fill="#0A59C8" font-weight="900">269-550-8801</text>
+    <text x="170" class="tiny"> | Email </text>
+    <text x="218" class="tiny" fill="#0A59C8" font-weight="900">spinanddashlaundry@gmail.com</text>
+  </g>
+</svg>
 </html>
