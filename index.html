@@ -1,197 +1,213 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Spin & Dash — One-Page Flyer (DDG-safe)</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spin & Dash — One-Page Vector Flyer</title>
 <style>
-  html,body{margin:0;background:#eef4ff;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif;color:#0b1220}
-  .wrap{max-width:980px;margin:20px auto;padding:16px}
-  .card{background:#fff;border-radius:16px;box-shadow:0 18px 44px rgba(0,0,0,.14);padding:16px}
-  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-  .btn{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.18)}
+  html,body{margin:0;background:#eef4ff;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif}
+  .frame{max-width:900px;margin:16px auto;padding:12px}
+  .bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  button{border:0;border-radius:12px;padding:12px 14px;font-weight:900;box-shadow:0 8px 22px rgba(0,0,0,.18);cursor:pointer}
   .primary{background:#10b981;color:#063}
   .secondary{background:#0A6DFF;color:#fff}
-  .muted{background:#e5e7eb;color:#111}
-  .note{color:#5f6b7a;font-size:14px;margin-top:10px}
-  #preview{margin-top:12px;display:none}
-  #preview img{max-width:100%;height:auto;border-radius:12px;box-shadow:0 12px 28px rgba(0,0,0,.18)}
+  .note{color:#475569;font-size:13px;margin-top:8px}
+  .sheet{display:block;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 18px 44px rgba(0,0,0,.14)}
+  /* print view */
+  @media print{
+    @page{size:Letter;margin:0}
+    .frame,.bar,.note{display:none}
+    body{background:#fff}
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="card">
-    <h2 style="margin:0 0 6px">Spin &amp; Dash — One-Page Flyer</h2>
-    <div class="actions">
-      <button class="btn primary" onclick="makePNG()">Make High-Res Image</button>
-      <a id="dl" class="btn secondary" download="SpinDash_Flyer_2550x3300.png" href="#" style="pointer-events:none;opacity:.6">Download Image</a>
-      <button class="btn muted" onclick="showPreview()">Show Preview (long-press to save)</button>
-    </div>
-    <div class="note">
-      This avoids pop-ups and external libs. First tap <b>Make High-Res Image</b> — that generates a
-      one-page 300-DPI image. Then tap <b>Download Image</b>. If DuckDuckGo blocks it, tap <b>Show Preview</b> and long-press the image → <b>Save image</b>.
-    </div>
-    <div id="preview"><img id="imgOut" alt="Flyer preview"/></div>
+<div class="frame">
+  <div class="bar">
+    <button class="primary" onclick="savePDF()">Save as PDF (One Page)</button>
+    <button class="secondary" onclick="downloadSVG()">Download SVG</button>
   </div>
+  <div class="note">If DuckDuckGo blocks the PDF flow, tap “Download SVG”, then open it from Files and choose “Print → Save as PDF”. SVG is vector, so it’s always one crisp page.</div>
 </div>
 
-<canvas id="flyer" width="2550" height="3300" style="display:none"></canvas>
+<!-- LETTER-SIZED SVG (exactly 8.5in × 11in) -->
+<svg id="flyerSVG" class="sheet" xmlns="http://www.w3.org/2000/svg"
+     width="8.5in" height="11in" viewBox="0 0 850 1100">
+
+  <!-- paper background -->
+  <rect x="0" y="0" width="850" height="1100" fill="#ffffff"/>
+
+  <!-- HERO gradient panel -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#063CB6"/>
+      <stop offset="1" stop-color="#0A6DFF"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".12"/>
+    </filter>
+    <style>
+      .headline{font:900 48px/1.06 Inter,Segoe UI,Arial,sans-serif;fill:#fff}
+      .sub{font:500 16px/1.5 Inter,Segoe UI,Arial,sans-serif;fill:#eef6ff}
+      .pill{font:700 12px Inter,Segoe UI,Arial,sans-serif;fill:#fff}
+      .h6{font:800 18px Inter,Segoe UI,Arial,sans-serif;fill:#233b79}
+      .rowL{font:800 16px Inter,Segoe UI,Arial,sans-serif;fill:#0b1220}
+      .rowR{font:900 18px Inter,Segoe UI,Arial,sans-serif;fill:#0b1220}
+      .bul{font:400 14px Inter,Segoe UI,Arial,sans-serif;fill:#0b1220}
+      .featT{font:800 14px Inter,Segoe UI,Arial,sans-serif;fill:#063cb6}
+      .featD{font:400 13px Inter,Segoe UI,Arial,sans-serif;fill:#0b1220}
+      .ctaBand{font:700 15px Inter,Segoe UI,Arial,sans-serif;fill:#063cb6}
+      .ctaBig{font:900 28px Inter,Segoe UI,Arial,sans-serif;fill:#063cb6}
+      .ctaText{font:800 16px Inter,Segoe UI,Arial,sans-serif;fill:#334}
+      .foot{font:500 12px Inter,Segoe UI,Arial,sans-serif;fill:#6b7280}
+    </style>
+  </defs>
+
+  <!-- HERO CARD -->
+  <g transform="translate(40,40)">
+    <rect x="0" y="0" rx="18" ry="18" width="770" height="220" fill="url(#g)"/>
+    <!-- pills -->
+    <g transform="translate(22,16)">
+      <g transform="translate(0,0)"><rect rx="999" ry="999" width="110" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">West Michigan</text></g>
+      <g transform="translate(122,0)"><rect rx="999" ry="999" width="110" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">Female-Owned</text></g>
+      <g transform="translate(244,0)"><rect rx="999" ry="999" width="128" height="30" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/><text class="pill" x="12" y="20">Bonded & Insured</text></g>
+    </g>
+    <text class="headline" x="22" y="92">Laundry That Moves as Fast</text>
+    <text class="headline" x="22" y="142">as You Do.</text>
+    <text class="sub" x="22" y="178">Founding routes now open — 24–48h turnaround with pro wash–dry–fold.</text>
+
+    <!-- chips -->
+    <g transform="translate(22,190)">
+      <g>
+        <rect width="42" height="42" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
+        <circle cx="21" cy="21" r="12" stroke="#fff" fill="none" stroke-width="2"/>
+        <line x1="12" y1="18" x2="30" y2="18" stroke="#fff" stroke-width="2"/>
+        <line x1="14" y1="24" x2="28" y2="24" stroke="#fff" stroke-width="2"/>
+      </g>
+      <g transform="translate(52,0)">
+        <rect width="42" height="42" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
+        <rect x="7" y="12" width="22" height="14" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
+        <rect x="30" y="16" width="8" height="10" rx="2" fill="none" stroke="#fff" stroke-width="2"/>
+        <circle cx="15" cy="34" r="3" fill="#fff"/><circle cx="32" cy="34" r="3" fill="#fff"/>
+      </g>
+      <g transform="translate(104,0)">
+        <rect width="42" height="42" rx="12" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.36)"/>
+        <circle cx="21" cy="23" r="12" fill="none" stroke="#fff" stroke-width="2"/>
+        <line x1="21" y1="10" x2="21" y2="7" stroke="#fff" stroke-width="2"/>
+        <line x1="21" y1="23" x2="21" y2="16" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        <line x1="21" y1="23" x2="28" y2="23" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- GRID -->
+  <g transform="translate(40,280)">
+    <!-- left card -->
+    <g filter="url(#cardShadow)">
+      <rect x="0" y="0" rx="18" ry="18" width="470" height="570" fill="#fff" stroke="#dce6ff"/>
+    </g>
+    <text class="h6" x="20" y="32">Transparent Pricing</text>
+
+    <!-- rows -->
+    <g>
+      <g transform="translate(20,50)">
+        <rect rx="12" ry="12" width="430" height="64" fill="#f8fbff" stroke="#e7efff"/>
+        <text class="rowL" x="14" y="40">Standard Wash, Dry &amp; Fold</text>
+        <text class="rowR" x="402" y="40" text-anchor="end">$1.75/lb</text>
+      </g>
+      <g transform="translate(20,120)">
+        <rect rx="12" ry="12" width="430" height="64" fill="#f8fbff" stroke="#e7efff"/>
+        <text class="rowL" x="14" y="40">Express Service</text>
+        <text class="rowR" x="402" y="40" text-anchor="end">$2.25/lb</text>
+      </g>
+      <g transform="translate(20,190)">
+        <rect rx="12" ry="12" width="430" height="64" fill="#f8fbff" stroke="#e7efff"/>
+        <text class="rowL" x="14" y="40">Minimum Order</text>
+        <text class="rowR" x="402" y="40" text-anchor="end">$35 min</text>
+      </g>
+    </g>
+
+    <!-- bullets -->
+    <g class="bul" transform="translate(20,270)">
+      <circle cx="6" cy="6" r="4" fill="#063cb6"/><text x="18" y="10">We weigh laundry for accuracy</text>
+      <circle cx="6" cy="34" r="4" fill="#063cb6"/><text x="18" y="38">Free local pickup &amp; delivery</text>
+    </g>
+
+    <!-- features row -->
+    <g transform="translate(20,330)">
+      <g>
+        <rect rx="12" ry="12" width="134" height="90" fill="#fbfdff" stroke="#e6edff"/>
+        <text class="featT" x="10" y="26">Founding Perks</text>
+        <text class="featD" x="10" y="46">Early-bird slots +</text>
+        <text class="featD" x="10" y="62">priority routes.</text>
+      </g>
+      <g transform="translate(148,0)">
+        <rect rx="12" ry="12" width="134" height="90" fill="#fbfdff" stroke="#e6edff"/>
+        <text class="featT" x="10" y="26">24–48h Turnaround</text>
+        <text class="featD" x="10" y="46">Rush upgrades when</text>
+        <text class="featD" x="10" y="62">needed.</text>
+      </g>
+      <g transform="translate(296,0)">
+        <rect rx="12" ry="12" width="134" height="90" fill="#fbfdff" stroke="#e6edff"/>
+        <text class="featT" x="10" y="26">Tiered Plans</text>
+        <text class="featD" x="10" y="46">Bundles for families &amp;</text>
+        <text class="featD" x="10" y="62">busy pros.</text>
+      </g>
+    </g>
+
+    <!-- CTA band -->
+    <g transform="translate(20,440)">
+      <linearGradient id="gb" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#eef5ff"/><stop offset="1" stop-color="#ecfff7"/>
+      </linearGradient>
+      <rect rx="12" ry="12" width="430" height="50" fill="url(#gb)" stroke="#cfe0ff"/>
+      <text class="ctaBand" x="12" y="32">Be first to launch. Reply today to lock your route.</text>
+    </g>
+
+    <!-- right card -->
+    <g transform="translate(500,0)">
+      <g filter="url(#cardShadow)"><rect x="0" y="0" rx="18" ry="18" width="270" height="250" fill="#fff" stroke="#dce6ff"/></g>
+      <!-- tiny marks -->
+      <rect x="14" y="14" width="24" height="16" fill="rgba(6,60,182,.08)" stroke="#063cb6"/>
+      <rect x="44" y="14" width="24" height="16" fill="rgba(6,60,182,.08)" stroke="#063cb6"/>
+      <!-- call box -->
+      <g transform="translate(14,40)">
+        <rect x="0" y="0" rx="14" ry="14" width="242" height="150" fill="#f6f9ff" stroke="#063cb6" stroke-width="2"/>
+        <text class="ctaText" x="121" y="26" text-anchor="middle">Text “SPIN” to</text>
+        <text class="ctaBig" x="121" y="64" text-anchor="middle">269-550-8801</text>
+        <text class="ctaText" x="121" y="95" text-anchor="middle">Book or Join the Waitlist</text>
+        <text class="ctaText" x="121" y="120" text-anchor="middle" fill="#0A6DFF">spinanddashlaundry@gmail.com</text>
+      </g>
+      <text class="bul" x="14" y="218" fill="#6b7280">Fast response • Friendly service • Local team</text>
+    </g>
+  </g>
+
+  <!-- footer -->
+  <text class="foot" x="425" y="1068" text-anchor="middle">© Spin & Dash Laundry • Female-Owned • Bonded & Insured • West Michigan</text>
+</svg>
 
 <script>
-/* ---------- Editable copy ---------- */
-const DATA = {
-  headerTitle: "Laundry That Moves as Fast as You Do.",
-  headerSub: "Founding routes now open — 24–48h turnaround with pro wash–dry–fold.",
-  badges: ["West Michigan","Female-Owned","Bonded & Insured"],
-  pricing: [
-    {label:"Standard Wash, Dry & Fold", price:"$1.75/lb"},
-    {label:"Express Service",           price:"$2.25/lb"},
-    {label:"Minimum Order",             price:"$35 min"}
-  ],
-  bullets: [
-    "We weigh laundry for accuracy",
-    "Free local pickup & delivery"
-  ],
-  features: [
-    {title:"Founding Perks",    desc:"Early-bird slots + priority routes."},
-    {title:"24–48h Turnaround", desc:"Rush upgrades when needed."},
-    {title:"Tiered Plans",      desc:"Bundles for families & busy pros."}
-  ],
-  ctaBand: "Be first to launch. Reply today to lock your route.",
-  phoneCTA: "Text “SPIN” to",
-  phone: "269-550-8801",
-  phoneSub: "Book or Join the Waitlist",
-  email: "spinanddashlaundry@gmail.com"
-};
-
-/* ---------- Canvas drawing (2550x3300 = 300 DPI Letter) ---------- */
-function drawFlyer(ctx){
-  const W=2550,H=3300; const M=120; const innerW=W-M*2;
-  ctx.fillStyle="#ffffff"; ctx.fillRect(0,0,W,H);
-
-  // HERO
-  const heroX=M, heroY=M, heroW=innerW, heroH=560;
-  const grad=ctx.createLinearGradient(heroX,heroY,heroX+heroW,heroY+heroH);
-  grad.addColorStop(0,"#063CB6"); grad.addColorStop(1,"#0A6DFF");
-  ctx.fillStyle=grad; roundRect(ctx,heroX,heroY,heroW,heroH,36); ctx.fill();
-
-  // badges
-  let pillX=heroX+26, pillY=heroY+26; const pillPX=22, pillPY=14, pillGap=14;
-  ctx.font="bold 36px Arial"; ctx.textBaseline="middle";
-  for(const b of DATA.badges){
-    const tw=ctx.measureText(b).width, bw=tw+pillPX*2, bh=52;
-    ctx.fillStyle="rgba(255,255,255,0.18)";
-    ctx.strokeStyle="rgba(255,255,255,0.36)"; ctx.lineWidth=2;
-    roundRect(ctx,pillX,pillY,bw,bh,999); ctx.fill(); ctx.stroke();
-    ctx.fillStyle="#fff"; ctx.fillText(b,pillX+pillPX,pillY+bh/2);
-    pillX+=bw+pillGap;
-  }
-
-  // headline & sub
-  ctx.fillStyle="#fff"; ctx.textBaseline="top";
-  ctx.font="900 92px Arial"; wrapText(ctx,DATA.headerTitle,heroX+26,heroY+120,heroW-52,100);
-  ctx.font="500 46px Arial"; drawParagraph(ctx,DATA.headerSub,heroX+26,heroY+310,heroW-52,60);
-
-  // hero chips
-  const chipY=heroY+heroH-100, chipS=72, chipR=18;
-  for(let i=0;i<3;i++){
-    const cx=heroX+26+i*(chipS+16);
-    ctx.fillStyle="rgba(255,255,255,0.18)";
-    ctx.strokeStyle="rgba(255,255,255,0.36)"; ctx.lineWidth=2;
-    roundRect(ctx,cx,chipY,chipS,chipS,chipR); ctx.fill(); ctx.stroke();
-    ctx.strokeStyle="#fff"; ctx.lineWidth=6;
-    if(i===0){ // basket
-      ctx.beginPath(); ctx.arc(cx+chipS/2, chipY+chipS/2, 24, 0, Math.PI*2); ctx.stroke();
-      line(ctx,cx+18,chipY+chipS/2-10,cx+chipS-18,chipY+chipS/2-10);
-      line(ctx,cx+22,chipY+chipS/2+10,cx+chipS-22,chipY+chipS/2+10);
-    }else if(i===1){ // van
-      ctx.strokeRect(cx+12,chipY+20,44,28);
-      ctx.beginPath(); ctx.arc(cx+24,chipY+56,6,0,Math.PI*2); ctx.fillStyle="#fff"; ctx.fill();
-      ctx.beginPath(); ctx.arc(cx+48,chipY+56,6,0,Math.PI*2); ctx.fill();
-    }else{ // stopwatch
-      ctx.beginPath(); ctx.arc(cx+chipS/2, chipY+chipS/2+2, 24, 0, Math.PI*2); ctx.stroke();
-      line(ctx,cx+chipS/2,chipY+10,cx+chipS/2,chipY+4);
-      line(ctx,cx+chipS/2,chipY+chipS/2+2,cx+chipS/2,chipY+chipS/2-16);
-      line(ctx,cx+chipS/2,chipY+chipS/2+2,cx+chipS/2+14,chipY+chipS/2+2);
-    }
-  }
-
-  // body columns
-  const colGap=40;
-  const leftX=M, leftW=Math.floor(innerW*0.60)-colGap;
-  const rightX=M+leftW+colGap+colGap; // give extra gap
-  const rightW=innerW-(leftW+colGap+colGap);
-  let y=heroY+heroH+40;
-
-  // left card
-  const leftH=1500; drawCard(ctx,leftX,y,leftW,leftH);
-  let lx=leftX+28, ly=y+28, lw=leftW-56;
-  ctx.fillStyle="#233b79"; ctx.font="800 48px Arial"; ctx.fillText("Transparent Pricing",lx,ly); ly+=70;
-
-  ctx.font="700 40px Arial";
-  const rowH=96,rowR=22;
-  for(const row of DATA.pricing){ drawRow(ctx,lx,ly,lw,rowH,rowR,row.label,row.price); ly+=rowH+16; }
-
-  ctx.font="400 36px Arial"; ctx.fillStyle="#0b1220";
-  for(const b of DATA.bullets){ bullet(ctx,lx,ly,b); ly+=56; }
-
-  ly+=24;
-  const featW=Math.floor((lw-24*2)/3);
-  DATA.features.forEach((f,i)=>{ featureBox(ctx,lx+i*(featW+24),ly,featW,150,f.title,f.desc); });
-  ly+=150+24;
-
-  ctaBand(ctx,lx,ly,lw,90,DATA.ctaBand);
-
-  // right card
-  const rightH=700; drawCard(ctx,rightX,y,rightW,rightH);
-  let rx=rightX+28, ry=y+28, rw=rightW-56;
-  ctx.strokeStyle="#063cb6"; ctx.lineWidth=6; ctx.strokeRect(rx,ry,52,36); ctx.strokeRect(rx+64,ry,52,36);
-  ry+=60;
-  callBox(ctx,rx,ry,rw,260,DATA.phoneCTA,DATA.phone,DATA.phoneSub,DATA.email);
-  ry+=272; ctx.fillStyle="#6b7280"; ctx.font="500 32px Arial"; ctx.fillText("Fast response • Friendly service • Local team",rx,ry);
-
-  // footer
-  ctx.fillStyle="#6b7280"; ctx.font="500 28px Arial"; ctx.textAlign="center";
-  ctx.fillText("© Spin & Dash Laundry • Female-Owned • Bonded & Insured • West Michigan", W/2, H- M);
-  ctx.textAlign="left";
+function savePDF(){
+  // open a print-only tab containing just the Letter-sized SVG
+  const svg = document.getElementById('flyerSVG').outerHTML;
+  const html = `
+    <!doctype html><html><head><meta charset="utf-8">
+    <style>@page{size:Letter;margin:0}html,body{margin:0;background:#fff}</style>
+    </head><body>${svg}<script>setTimeout(()=>window.print(),200)<\/script></body></html>`;
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const w = window.open(url, '_blank'); // DDG supports blob URLs better than data URIs
+  if(!w){ alert('If a blocker prevented opening the PDF view, use “Download SVG” instead.'); }
 }
 
-/* helpers */
-function roundRect(ctx,x,y,w,h,r){const rr=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+rr,y);ctx.arcTo(x+w,y,x+w,y+h,rr);ctx.arcTo(x+w,y+h,x,y+h,rr);ctx.arcTo(x,y+h,x,y,rr);ctx.arcTo(x,y,x+w,y,rr);ctx.closePath();}
-function line(ctx,x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
-function wrapText(ctx,text,x,y,maxWidth,lineHeight){const words=text.split(' ');let line='';for(let n=0;n<words.length;n++){const test=line+words[n]+' ';if(ctx.measureText(test).width>maxWidth&&n>0){ctx.fillText(line,x,y);line=words[n]+' ';y+=lineHeight;}else{line=test;}}ctx.fillText(line,x,y);}
-function drawParagraph(ctx,text,x,y,maxWidth,lineHeight){const parts=text.split(/\s+/);let line='';ctx.textBaseline="top";for(let i=0;i<parts.length;i++){const test=line+parts[i]+' ';if(ctx.measureText(test).width>maxWidth){ctx.fillText(line,x,y);y+=lineHeight;line=parts[i]+' ';}else{line=test;}}if(line)ctx.fillText(line,x,y);}
-function drawCard(ctx,x,y,w,h){ctx.fillStyle="#ffffff";ctx.strokeStyle="#dce6ff";ctx.lineWidth=3;roundRect(ctx,x,y,w,h,24);ctx.fill();ctx.stroke();}
-function drawRow(ctx,x,y,w,h,r,label,price){ctx.fillStyle="#f8fbff";ctx.strokeStyle="#e7efff";ctx.lineWidth=2;roundRect(ctx,x,y,w,h,r);ctx.fill();ctx.stroke();ctx.fillStyle="#0b1220";ctx.font="800 38px Arial";ctx.textBaseline="middle";ctx.fillText(label,x+18,y+h/2);ctx.textAlign="right";ctx.font="900 40px Arial";ctx.fillText(price,x+w-18,y+h/2);ctx.textAlign="left";}
-function bullet(ctx,x,y,text){ctx.fillStyle="#063cb6";ctx.beginPath();ctx.arc(x+6,y+10,6,0,Math.PI*2);ctx.fill();ctx.fillStyle="#0b1220";ctx.fillText(text,x+24,y);}
-function featureBox(ctx,x,y,w,h,title,desc){ctx.fillStyle="#fbfdff";ctx.strokeStyle="#e6edff";ctx.lineWidth=2;roundRect(ctx,x,y,w,h,16);ctx.fill();ctx.stroke();ctx.fillStyle="#063cb6";ctx.font="800 32px Arial";ctx.fillText(title,x+12,y+36);ctx.fillStyle="#0b1220";ctx.font="400 30px Arial";drawParagraph(ctx,desc,x+12,y+72,w-24,36);}
-function ctaBand(ctx,x,y,w,h,text){const g=ctx.createLinearGradient(x,y,x+w,y);g.addColorStop(0,"#eef5ff");g.addColorStop(1,"#ecfff7");ctx.fillStyle=g;ctx.strokeStyle="#cfe0ff";ctx.lineWidth=2;roundRect(ctx,x,y,w,h,14);ctx.fill();ctx.stroke();ctx.fillStyle="#063cb6";ctx.font="700 34px Arial";ctx.textBaseline="middle";ctx.fillText(text,x+14,y+h/2);}
-function callBox(ctx,x,y,w,h,pre,phone,sub,email){ctx.fillStyle="#f6f9ff";ctx.strokeStyle="#063cb6";ctx.lineWidth=4;roundRect(ctx,x,y,w,h,18);ctx.fill();ctx.stroke();ctx.textAlign="center";ctx.fillStyle="#334";ctx.font="800 36px Arial";ctx.fillText(pre,x+w/2,y+40);ctx.fillStyle="#063cb6";ctx.font="900 60px Arial";ctx.fillText(phone,x+w/2,y+104);ctx.fillStyle="#334";ctx.font="800 32px Arial";ctx.fillText(sub,x+w/2,y+160);ctx.fillStyle="#063cb6";ctx.font="700 30px Arial";ctx.fillText(email,x+w/2,y+210);ctx.textAlign="left";}
-
-/* ---------- No-pop-up save flow ---------- */
-let pngURL = null;
-
-function makePNG(){
-  const c=document.getElementById('flyer'), ctx=c.getContext('2d');
-  drawFlyer(ctx);
-  // create a reasonably compressed PNG data URL (works offline & in DDG)
-  pngURL = c.toDataURL('image/png'); // data:image/png;base64,...
-  const dl = document.getElementById('dl');
-  dl.href = pngURL;
-  dl.style.pointerEvents='auto';
-  dl.style.opacity='1';
-  // also refresh preview if open
-  const img = document.getElementById('imgOut');
-  if(img && document.getElementById('preview').style.display!=='none'){ img.src = pngURL; }
-  alert('Image ready. Tap "Download Image" or "Show Preview".');
-}
-
-function showPreview(){
-  if(!pngURL){ makePNG(); }
-  const box=document.getElementById('preview');
-  const img=document.getElementById('imgOut');
-  img.src = pngURL;
-  box.style.display='block';
+function downloadSVG(){
+  const svg = document.getElementById('flyerSVG').outerHTML;
+  const blob = new Blob([svg], {type:'image/svg+xml'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'SpinDash_Flyer_Letter.svg';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 2000);
 }
 </script>
 </body>
