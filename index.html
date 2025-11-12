@@ -3,38 +3,42 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Spin & Dash — One-Page PDF (Canvas)</title>
+<title>Spin & Dash — One-Page Flyer (DDG-safe)</title>
 <style>
   html,body{margin:0;background:#eef4ff;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif;color:#0b1220}
-  .wrap{max-width:960px;margin:20px auto;padding:16px}
+  .wrap{max-width:980px;margin:20px auto;padding:16px}
   .card{background:#fff;border-radius:16px;box-shadow:0 18px 44px rgba(0,0,0,.14);padding:16px}
-  .actions{display:flex;gap:12px;flex-wrap:wrap}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
   .btn{border:0;border-radius:12px;padding:12px 16px;font-weight:900;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.18)}
   .primary{background:#10b981;color:#063}
   .secondary{background:#0A6DFF;color:#fff}
+  .muted{background:#e5e7eb;color:#111}
   .note{color:#5f6b7a;font-size:14px;margin-top:10px}
-  canvas{display:none} /* hidden; we render and export */
+  #preview{margin-top:12px;display:none}
+  #preview img{max-width:100%;height:auto;border-radius:12px;box-shadow:0 12px 28px rgba(0,0,0,.18)}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="card">
-    <h2 style="margin:0 0 8px">Spin &amp; Dash — One-Page Flyer</h2>
+    <h2 style="margin:0 0 6px">Spin &amp; Dash — One-Page Flyer</h2>
     <div class="actions">
-      <button class="btn primary" onclick="generatePDF()">Generate One-Page PDF</button>
-      <button class="btn secondary" onclick="downloadPNG()">Download High-Res PNG</button>
+      <button class="btn primary" onclick="makePNG()">Make High-Res Image</button>
+      <a id="dl" class="btn secondary" download="SpinDash_Flyer_2550x3300.png" href="#" style="pointer-events:none;opacity:.6">Download Image</a>
+      <button class="btn muted" onclick="showPreview()">Show Preview (long-press to save)</button>
     </div>
-    <div class="note">This draws the flyer to a 300-DPI Letter canvas (2550×3300) and saves it as a single-page PDF. Works in DuckDuckGo.</div>
+    <div class="note">
+      This avoids pop-ups and external libs. First tap <b>Make High-Res Image</b> — that generates a
+      one-page 300-DPI image. Then tap <b>Download Image</b>. If DuckDuckGo blocks it, tap <b>Show Preview</b> and long-press the image → <b>Save image</b>.
+    </div>
+    <div id="preview"><img id="imgOut" alt="Flyer preview"/></div>
   </div>
 </div>
 
-<canvas id="flyer" width="2550" height="3300"></canvas>
-
-<!-- jsPDF (for PDF creation) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-6Jp5JbXzj2YxT1g3G0D5kS2c1wQFhO2e3gk2wz7M2yN2N1lqvO5b5Vv5k8h4VvVv2o3hQhFQw8Vj4pG6vM6fNA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<canvas id="flyer" width="2550" height="3300" style="display:none"></canvas>
 
 <script>
-/* === CONFIG (edit these if needed) === */
+/* ---------- Editable copy ---------- */
 const DATA = {
   headerTitle: "Laundry That Moves as Fast as You Do.",
   headerSub: "Founding routes now open — 24–48h turnaround with pro wash–dry–fold.",
@@ -49,9 +53,9 @@ const DATA = {
     "Free local pickup & delivery"
   ],
   features: [
-    {title:"Founding Perks",     desc:"Early-bird slots + priority routes."},
-    {title:"24–48h Turnaround",  desc:"Rush upgrades when needed."},
-    {title:"Tiered Plans",       desc:"Bundles for families & busy pros."}
+    {title:"Founding Perks",    desc:"Early-bird slots + priority routes."},
+    {title:"24–48h Turnaround", desc:"Rush upgrades when needed."},
+    {title:"Tiered Plans",      desc:"Bundles for families & busy pros."}
   ],
   ctaBand: "Be first to launch. Reply today to lock your route.",
   phoneCTA: "Text “SPIN” to",
@@ -60,254 +64,134 @@ const DATA = {
   email: "spinanddashlaundry@gmail.com"
 };
 
-/* === DRAW THE FLYER ON A 2550x3300 CANVAS === */
+/* ---------- Canvas drawing (2550x3300 = 300 DPI Letter) ---------- */
 function drawFlyer(ctx){
-  const W = 2550, H = 3300;
-  ctx.fillStyle = "#ffffff"; ctx.fillRect(0,0,W,H);
+  const W=2550,H=3300; const M=120; const innerW=W-M*2;
+  ctx.fillStyle="#ffffff"; ctx.fillRect(0,0,W,H);
 
-  /* MARGINS */
-  const M = 120; // ~0.4in
-  const innerW = W - M*2;
+  // HERO
+  const heroX=M, heroY=M, heroW=innerW, heroH=560;
+  const grad=ctx.createLinearGradient(heroX,heroY,heroX+heroW,heroY+heroH);
+  grad.addColorStop(0,"#063CB6"); grad.addColorStop(1,"#0A6DFF");
+  ctx.fillStyle=grad; roundRect(ctx,heroX,heroY,heroW,heroH,36); ctx.fill();
 
-  /* HERO GRADIENT RECT */
-  const heroX = M, heroY = M, heroW = innerW, heroH = 560;
-  const grad = ctx.createLinearGradient(heroX, heroY, heroX+heroW, heroY+heroH);
-  grad.addColorStop(0, "#063CB6"); grad.addColorStop(1, "#0A6DFF");
-  ctx.fillStyle = grad;
-  roundRect(ctx, heroX, heroY, heroW, heroH, 36); ctx.fill();
-
-  /* BADGE PILLS */
-  const pillPadX = 22, pillPadY = 14, pillGap = 14;
-  let pillX = heroX + 26, pillY = heroY + 26;
-  ctx.font = "bold 36px Arial"; ctx.textBaseline = "middle";
+  // badges
+  let pillX=heroX+26, pillY=heroY+26; const pillPX=22, pillPY=14, pillGap=14;
+  ctx.font="bold 36px Arial"; ctx.textBaseline="middle";
   for(const b of DATA.badges){
-    const tw = ctx.measureText(b).width;
-    const bw = tw + pillPadX*2, bh = 52;
-    ctx.fillStyle = "rgba(255,255,255,0.18)";
-    ctx.strokeStyle = "rgba(255,255,255,0.36)"; ctx.lineWidth = 2;
-    roundRect(ctx, pillX, pillY, bw, bh, 999); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = "#fff";
-    ctx.fillText(b, pillX + pillPadX, pillY + bh/2);
-    pillX += bw + pillGap;
+    const tw=ctx.measureText(b).width, bw=tw+pillPX*2, bh=52;
+    ctx.fillStyle="rgba(255,255,255,0.18)";
+    ctx.strokeStyle="rgba(255,255,255,0.36)"; ctx.lineWidth=2;
+    roundRect(ctx,pillX,pillY,bw,bh,999); ctx.fill(); ctx.stroke();
+    ctx.fillStyle="#fff"; ctx.fillText(b,pillX+pillPX,pillY+bh/2);
+    pillX+=bw+pillGap;
   }
 
-  /* HEADLINE + SUB */
-  ctx.fillStyle = "#fff";
-  ctx.font = "900 92px Arial";
-  ctx.textBaseline = "top";
-  wrapText(ctx, DATA.headerTitle, heroX+26, heroY+120, heroW-52, 100);
+  // headline & sub
+  ctx.fillStyle="#fff"; ctx.textBaseline="top";
+  ctx.font="900 92px Arial"; wrapText(ctx,DATA.headerTitle,heroX+26,heroY+120,heroW-52,100);
+  ctx.font="500 46px Arial"; drawParagraph(ctx,DATA.headerSub,heroX+26,heroY+310,heroW-52,60);
 
-  ctx.font = "500 46px Arial";
-  drawParagraph(ctx, DATA.headerSub, heroX+26, heroY+310, heroW-52, 60);
-
-  /* HERO ICON CHIPS (3 simple icons) */
-  const chipY = heroY + heroH - 100, chipSize = 72, chipR = 18;
+  // hero chips
+  const chipY=heroY+heroH-100, chipS=72, chipR=18;
   for(let i=0;i<3;i++){
-    const cx = heroX + 26 + i*(chipSize+16);
-    ctx.fillStyle = "rgba(255,255,255,0.18)";
-    ctx.strokeStyle = "rgba(255,255,255,0.36)"; ctx.lineWidth = 2;
-    roundRect(ctx, cx, chipY, chipSize, chipSize, chipR); ctx.fill(); ctx.stroke();
-    // icon: simple white shapes
-    ctx.strokeStyle = "#fff"; ctx.lineWidth = 6;
-    if(i===0){ // basket-ish
-      ctx.beginPath(); ctx.arc(cx+chipSize/2, chipY+chipSize/2, 24, 0, Math.PI*2); ctx.stroke();
-      line(ctx, cx+18, chipY+chipSize/2-10, cx+chipSize-18, chipY+chipSize/2-10);
-      line(ctx, cx+22, chipY+chipSize/2+10, cx+chipSize-22, chipY+chipSize/2+10);
-    }else if(i===1){ // van-ish
-      ctx.strokeRect(cx+12, chipY+20, 44, 28);
-      ctx.beginPath(); ctx.arc(cx+24, chipY+56, 6, 0, Math.PI*2); ctx.fillStyle="#fff"; ctx.fill();
-      ctx.beginPath(); ctx.arc(cx+48, chipY+56, 6, 0, Math.PI*2); ctx.fill();
-    }else{ // stopwatch-ish
-      ctx.beginPath(); ctx.arc(cx+chipSize/2, chipY+chipSize/2+2, 24, 0, Math.PI*2); ctx.stroke();
-      line(ctx, cx+chipSize/2, chipY+10, cx+chipSize/2, chipY+4);
-      line(ctx, cx+chipSize/2, chipY+chipSize/2+2, cx+chipSize/2, chipY+chipSize/2-16);
-      line(ctx, cx+chipSize/2, chipY+chipSize/2+2, cx+chipSize/2+14, chipY+chipSize/2+2);
+    const cx=heroX+26+i*(chipS+16);
+    ctx.fillStyle="rgba(255,255,255,0.18)";
+    ctx.strokeStyle="rgba(255,255,255,0.36)"; ctx.lineWidth=2;
+    roundRect(ctx,cx,chipY,chipS,chipS,chipR); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle="#fff"; ctx.lineWidth=6;
+    if(i===0){ // basket
+      ctx.beginPath(); ctx.arc(cx+chipS/2, chipY+chipS/2, 24, 0, Math.PI*2); ctx.stroke();
+      line(ctx,cx+18,chipY+chipS/2-10,cx+chipS-18,chipY+chipS/2-10);
+      line(ctx,cx+22,chipY+chipS/2+10,cx+chipS-22,chipY+chipS/2+10);
+    }else if(i===1){ // van
+      ctx.strokeRect(cx+12,chipY+20,44,28);
+      ctx.beginPath(); ctx.arc(cx+24,chipY+56,6,0,Math.PI*2); ctx.fillStyle="#fff"; ctx.fill();
+      ctx.beginPath(); ctx.arc(cx+48,chipY+56,6,0,Math.PI*2); ctx.fill();
+    }else{ // stopwatch
+      ctx.beginPath(); ctx.arc(cx+chipS/2, chipY+chipS/2+2, 24, 0, Math.PI*2); ctx.stroke();
+      line(ctx,cx+chipS/2,chipY+10,cx+chipS/2,chipY+4);
+      line(ctx,cx+chipS/2,chipY+chipS/2+2,cx+chipS/2,chipY+chipS/2-16);
+      line(ctx,cx+chipS/2,chipY+chipS/2+2,cx+chipS/2+14,chipY+chipS/2+2);
     }
   }
 
-  /* BODY COLUMNS */
-  const colGap = 40;
-  const leftX = M, rightX = M + Math.floor(innerW*0.60) + colGap;
-  const leftW = Math.floor(innerW*0.60) - colGap;
-  const rightW = innerW - (leftW + colGap);
-  let y = heroY + heroH + 40;
+  // body columns
+  const colGap=40;
+  const leftX=M, leftW=Math.floor(innerW*0.60)-colGap;
+  const rightX=M+leftW+colGap+colGap; // give extra gap
+  const rightW=innerW-(leftW+colGap+colGap);
+  let y=heroY+heroH+40;
 
-  // LEFT CARD
-  const leftCardH = 1500;
-  drawCard(ctx, leftX, y, leftW, leftCardH);
-  let lx = leftX + 28, ly = y + 28, lw = leftW - 56;
+  // left card
+  const leftH=1500; drawCard(ctx,leftX,y,leftW,leftH);
+  let lx=leftX+28, ly=y+28, lw=leftW-56;
+  ctx.fillStyle="#233b79"; ctx.font="800 48px Arial"; ctx.fillText("Transparent Pricing",lx,ly); ly+=70;
 
-  ctx.fillStyle = "#233b79";
-  ctx.font = "800 48px Arial"; ctx.fillText("Transparent Pricing", lx, ly); ly += 70;
+  ctx.font="700 40px Arial";
+  const rowH=96,rowR=22;
+  for(const row of DATA.pricing){ drawRow(ctx,lx,ly,lw,rowH,rowR,row.label,row.price); ly+=rowH+16; }
 
-  // Pricing rows
-  ctx.font = "700 40px Arial";
-  const rowH = 96, rowR = 22;
-  DATA.pricing.forEach(row => {
-    drawRow(ctx, lx, ly, lw, rowH, rowR, row.label, row.price);
-    ly += rowH + 16;
-  });
+  ctx.font="400 36px Arial"; ctx.fillStyle="#0b1220";
+  for(const b of DATA.bullets){ bullet(ctx,lx,ly,b); ly+=56; }
 
-  // Bullets
-  ctx.font = "400 36px Arial"; ctx.fillStyle = "#0b1220";
-  DATA.bullets.forEach(b=>{
-    bullet(ctx, lx, ly, b);
-    ly += 56;
-  });
+  ly+=24;
+  const featW=Math.floor((lw-24*2)/3);
+  DATA.features.forEach((f,i)=>{ featureBox(ctx,lx+i*(featW+24),ly,featW,150,f.title,f.desc); });
+  ly+=150+24;
 
-  // Feature ribbon (3)
-  ly += 24;
-  const featW = Math.floor((lw - 24*2)/3);
-  DATA.features.forEach((f, i)=>{
-    const fx = lx + i*(featW + 24);
-    featureBox(ctx, fx, ly, featW, 150, f.title, f.desc);
-  });
-  ly += 150 + 24;
+  ctaBand(ctx,lx,ly,lw,90,DATA.ctaBand);
 
-  // CTA band
-  ctaBand(ctx, lx, ly, lw, 90, DATA.ctaBand);
-  ly += 90;
+  // right card
+  const rightH=700; drawCard(ctx,rightX,y,rightW,rightH);
+  let rx=rightX+28, ry=y+28, rw=rightW-56;
+  ctx.strokeStyle="#063cb6"; ctx.lineWidth=6; ctx.strokeRect(rx,ry,52,36); ctx.strokeRect(rx+64,ry,52,36);
+  ry+=60;
+  callBox(ctx,rx,ry,rw,260,DATA.phoneCTA,DATA.phone,DATA.phoneSub,DATA.email);
+  ry+=272; ctx.fillStyle="#6b7280"; ctx.font="500 32px Arial"; ctx.fillText("Fast response • Friendly service • Local team",rx,ry);
 
-  // RIGHT CARD — Call-first panel
-  const rightCardH = 700;
-  drawCard(ctx, rightX, y, rightW, rightCardH);
-  let rx = rightX + 28, ry = y + 28, rw = rightW - 56;
-
-  // mark icons
-  ctx.strokeStyle = "#063cb6"; ctx.lineWidth = 6;
-  // phone
-  ctx.strokeRect(rx, ry, 52, 36);
-  // chat
-  ctx.strokeRect(rx+64, ry, 52, 36);
-  ry += 60;
-
-  // call box
-  callBox(ctx, rx, ry, rw, 260, DATA.phoneCTA, DATA.phone, DATA.phoneSub, DATA.email);
-  ry += 260 + 12;
-
-  ctx.fillStyle = "#6b7280"; ctx.font = "500 32px Arial";
-  ctx.fillText("Fast response • Friendly service • Local team", rx, ry);
-
-  // FOOTER
-  const footerText = "© Spin & Dash Laundry • Female-Owned • Bonded & Insured • West Michigan";
-  ctx.fillStyle = "#6b7280"; ctx.font = "500 28px Arial";
-  ctx.textAlign = "center";
-  ctx.fillText(footerText, W/2, H - M);
-  ctx.textAlign = "left";
-}
-
-/* === CANVAS HELPERS === */
-function roundRect(ctx,x,y,w,h,r){
-  const rr = Math.min(r, w/2, h/2);
-  ctx.beginPath();
-  ctx.moveTo(x+rr,y);
-  ctx.arcTo(x+w,y,x+w,y+h,rr);
-  ctx.arcTo(x+w,y+h,x,y+h,rr);
-  ctx.arcTo(x,y+h,x,y,rr);
-  ctx.arcTo(x,y,x+w,y,rr);
-  ctx.closePath();
-}
-function line(ctx,x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
-
-function wrapText(ctx, text, x, y, maxWidth, lineHeight){
-  const words = text.split(' '); let line = '';
-  for(let n=0;n<words.length;n++){
-    const testLine = line + words[n] + ' ';
-    const metrics = ctx.measureText(testLine);
-    if(metrics.width > maxWidth && n>0){ ctx.fillText(line, x, y); line = words[n] + ' '; y += lineHeight; }
-    else { line = testLine; }
-  }
-  ctx.fillText(line, x, y);
-}
-
-function drawParagraph(ctx, text, x, y, maxWidth, lineHeight){
-  const parts = text.split(/\s+/); let line=''; ctx.textBaseline="top";
-  for(let i=0;i<parts.length;i++){
-    const test = line + parts[i] + ' ';
-    if(ctx.measureText(test).width > maxWidth){ ctx.fillText(line, x, y); y += lineHeight; line = parts[i] + ' '; }
-    else{ line = test; }
-  }
-  if(line) ctx.fillText(line, x, y);
-}
-
-function drawCard(ctx,x,y,w,h){
-  ctx.fillStyle = "#ffffff";
-  ctx.strokeStyle = "#dce6ff"; ctx.lineWidth = 3;
-  roundRect(ctx, x, y, w, h, 24); ctx.fill(); ctx.stroke();
-  // drop shadow hint
-  ctx.save(); ctx.shadowColor="rgba(0,0,0,.08)"; ctx.shadowBlur=18; ctx.shadowOffsetY=10;
-  ctx.fill(); ctx.restore();
-}
-
-function drawRow(ctx,x,y,w,h,r,label,price){
-  // bg
-  ctx.fillStyle = "#f8fbff"; ctx.strokeStyle = "#e7efff"; ctx.lineWidth = 2;
-  roundRect(ctx, x, y, w, h, r); ctx.fill(); ctx.stroke();
-  // text
-  ctx.fillStyle = "#0b1220"; ctx.font = "800 38px Arial"; ctx.textBaseline="middle";
-  ctx.fillText(label, x+18, y+h/2);
-  ctx.textAlign="right"; ctx.font="900 40px Arial";
-  ctx.fillText(price, x+w-18, y+h/2); ctx.textAlign="left";
-}
-
-function bullet(ctx,x,y,text){
-  ctx.fillStyle = "#063cb6"; ctx.beginPath(); ctx.arc(x+6, y+10, 6, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle = "#0b1220"; ctx.fillText(text, x+24, y);
-}
-
-function featureBox(ctx,x,y,w,h,title,desc){
-  ctx.fillStyle="#fbfdff"; ctx.strokeStyle="#e6edff"; ctx.lineWidth=2;
-  roundRect(ctx, x, y, w, h, 16); ctx.fill(); ctx.stroke();
-  ctx.fillStyle="#063cb6"; ctx.font="800 32px Arial"; ctx.fillText(title, x+12, y+36);
-  ctx.fillStyle="#0b1220"; ctx.font="400 30px Arial";
-  drawParagraph(ctx, desc, x+12, y+72, w-24, 36);
-}
-
-function ctaBand(ctx,x,y,w,h,text){
-  // gradient look
-  const g = ctx.createLinearGradient(x,y,x+w,y);
-  g.addColorStop(0,"#eef5ff"); g.addColorStop(1,"#ecfff7");
-  ctx.fillStyle = g; ctx.strokeStyle = "#cfe0ff"; ctx.lineWidth=2;
-  roundRect(ctx, x, y, w, h, 14); ctx.fill(); ctx.stroke();
-  ctx.fillStyle="#063cb6"; ctx.font="700 34px Arial";
-  ctx.textBaseline="middle"; ctx.fillText(text, x+14, y+h/2);
-}
-
-function callBox(ctx,x,y,w,h,pre,phone,sub,email){
-  ctx.fillStyle="#f6f9ff"; ctx.strokeStyle="#063cb6"; ctx.lineWidth=4;
-  roundRect(ctx, x, y, w, h, 18); ctx.fill(); ctx.stroke();
-  ctx.textAlign="center";
-  ctx.fillStyle="#334"; ctx.font="800 36px Arial"; ctx.fillText(pre, x+w/2, y+40);
-  ctx.fillStyle="#063cb6"; ctx.font="900 60px Arial"; ctx.fillText(phone, x+w/2, y+104);
-  ctx.fillStyle="#334"; ctx.font="800 32px Arial"; ctx.fillText(sub, x+w/2, y+160);
-  ctx.fillStyle="#063cb6"; ctx.font="700 30px Arial"; ctx.fillText(email, x+w/2, y+210);
+  // footer
+  ctx.fillStyle="#6b7280"; ctx.font="500 28px Arial"; ctx.textAlign="center";
+  ctx.fillText("© Spin & Dash Laundry • Female-Owned • Bonded & Insured • West Michigan", W/2, H- M);
   ctx.textAlign="left";
 }
 
-/* === EXPORTS === */
-function generatePDF(){
-  const canvas = document.getElementById('flyer');
-  const ctx = canvas.getContext('2d');
-  drawFlyer(ctx);
+/* helpers */
+function roundRect(ctx,x,y,w,h,r){const rr=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+rr,y);ctx.arcTo(x+w,y,x+w,y+h,rr);ctx.arcTo(x+w,y+h,x,y+h,rr);ctx.arcTo(x,y+h,x,y,rr);ctx.arcTo(x,y,x+w,y,rr);ctx.closePath();}
+function line(ctx,x1,y1,x2,y2){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
+function wrapText(ctx,text,x,y,maxWidth,lineHeight){const words=text.split(' ');let line='';for(let n=0;n<words.length;n++){const test=line+words[n]+' ';if(ctx.measureText(test).width>maxWidth&&n>0){ctx.fillText(line,x,y);line=words[n]+' ';y+=lineHeight;}else{line=test;}}ctx.fillText(line,x,y);}
+function drawParagraph(ctx,text,x,y,maxWidth,lineHeight){const parts=text.split(/\s+/);let line='';ctx.textBaseline="top";for(let i=0;i<parts.length;i++){const test=line+parts[i]+' ';if(ctx.measureText(test).width>maxWidth){ctx.fillText(line,x,y);y+=lineHeight;line=parts[i]+' ';}else{line=test;}}if(line)ctx.fillText(line,x,y);}
+function drawCard(ctx,x,y,w,h){ctx.fillStyle="#ffffff";ctx.strokeStyle="#dce6ff";ctx.lineWidth=3;roundRect(ctx,x,y,w,h,24);ctx.fill();ctx.stroke();}
+function drawRow(ctx,x,y,w,h,r,label,price){ctx.fillStyle="#f8fbff";ctx.strokeStyle="#e7efff";ctx.lineWidth=2;roundRect(ctx,x,y,w,h,r);ctx.fill();ctx.stroke();ctx.fillStyle="#0b1220";ctx.font="800 38px Arial";ctx.textBaseline="middle";ctx.fillText(label,x+18,y+h/2);ctx.textAlign="right";ctx.font="900 40px Arial";ctx.fillText(price,x+w-18,y+h/2);ctx.textAlign="left";}
+function bullet(ctx,x,y,text){ctx.fillStyle="#063cb6";ctx.beginPath();ctx.arc(x+6,y+10,6,0,Math.PI*2);ctx.fill();ctx.fillStyle="#0b1220";ctx.fillText(text,x+24,y);}
+function featureBox(ctx,x,y,w,h,title,desc){ctx.fillStyle="#fbfdff";ctx.strokeStyle="#e6edff";ctx.lineWidth=2;roundRect(ctx,x,y,w,h,16);ctx.fill();ctx.stroke();ctx.fillStyle="#063cb6";ctx.font="800 32px Arial";ctx.fillText(title,x+12,y+36);ctx.fillStyle="#0b1220";ctx.font="400 30px Arial";drawParagraph(ctx,desc,x+12,y+72,w-24,36);}
+function ctaBand(ctx,x,y,w,h,text){const g=ctx.createLinearGradient(x,y,x+w,y);g.addColorStop(0,"#eef5ff");g.addColorStop(1,"#ecfff7");ctx.fillStyle=g;ctx.strokeStyle="#cfe0ff";ctx.lineWidth=2;roundRect(ctx,x,y,w,h,14);ctx.fill();ctx.stroke();ctx.fillStyle="#063cb6";ctx.font="700 34px Arial";ctx.textBaseline="middle";ctx.fillText(text,x+14,y+h/2);}
+function callBox(ctx,x,y,w,h,pre,phone,sub,email){ctx.fillStyle="#f6f9ff";ctx.strokeStyle="#063cb6";ctx.lineWidth=4;roundRect(ctx,x,y,w,h,18);ctx.fill();ctx.stroke();ctx.textAlign="center";ctx.fillStyle="#334";ctx.font="800 36px Arial";ctx.fillText(pre,x+w/2,y+40);ctx.fillStyle="#063cb6";ctx.font="900 60px Arial";ctx.fillText(phone,x+w/2,y+104);ctx.fillStyle="#334";ctx.font="800 32px Arial";ctx.fillText(sub,x+w/2,y+160);ctx.fillStyle="#063cb6";ctx.font="700 30px Arial";ctx.fillText(email,x+w/2,y+210);ctx.textAlign="left";}
 
-  // Make a PDF (Letter = 612×792 points)
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF('p','pt','letter');
-  const img = canvas.toDataURL('image/jpeg', 0.9);
-  pdf.addImage(img, 'JPEG', 0, 0, 612, 792); // full page
-  pdf.save('SpinDash_Flyer.pdf');
+/* ---------- No-pop-up save flow ---------- */
+let pngURL = null;
+
+function makePNG(){
+  const c=document.getElementById('flyer'), ctx=c.getContext('2d');
+  drawFlyer(ctx);
+  // create a reasonably compressed PNG data URL (works offline & in DDG)
+  pngURL = c.toDataURL('image/png'); // data:image/png;base64,...
+  const dl = document.getElementById('dl');
+  dl.href = pngURL;
+  dl.style.pointerEvents='auto';
+  dl.style.opacity='1';
+  // also refresh preview if open
+  const img = document.getElementById('imgOut');
+  if(img && document.getElementById('preview').style.display!=='none'){ img.src = pngURL; }
+  alert('Image ready. Tap "Download Image" or "Show Preview".');
 }
 
-function downloadPNG(){
-  const canvas = document.getElementById('flyer');
-  const ctx = canvas.getContext('2d');
-  drawFlyer(ctx);
-  const link = document.createElement('a');
-  link.download = 'SpinDash_Flyer_2550x3300.png';
-  link.href = canvas.toDataURL('image/png');
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
+function showPreview(){
+  if(!pngURL){ makePNG(); }
+  const box=document.getElementById('preview');
+  const img=document.getElementById('imgOut');
+  img.src = pngURL;
+  box.style.display='block';
 }
 </script>
 </body>
