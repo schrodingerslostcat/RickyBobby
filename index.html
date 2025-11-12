@@ -1,195 +1,66 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Spin & Dash Laundry — Launch Flyer</title>
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spin & Dash Laundry — Founding Routes</title>
 <style>
-  :root{
-    --blue:#0a6dff; --blueD:#063cb6; --ink:#0b1220; --muted:#5f6b7a; --paper:#fff;
-    --green:#10b981; --rose:#ef4444; --radius:22px;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;background:#eef3ff;color:var(--ink);font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif}
-
-  .page{max-width:980px;margin:28px auto;padding:16px}
-  .flyer{background:var(--paper);border-radius:var(--radius);box-shadow:0 18px 44px rgba(0,0,0,.14);overflow:hidden}
-
-  /* ===== HERO ===== */
-  .hero{position:relative;padding:34px 24px 36px;color:#fff;background:linear-gradient(135deg,var(--blueD),var(--blue));}
-  .hero .toprow{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-  .brand{display:flex;gap:12px;align-items:center}
-  .glyph{display:flex;gap:10px}
-  .glyph svg{filter:drop-shadow(0 4px 12px rgba(0,0,0,.25))}
-  .word{font-weight:900;font-size:44px;letter-spacing:.2px;margin:10px 0 6px}
-  .tag{margin:0;opacity:.95}
-  .chips{display:flex;gap:10px;margin-top:14px}
-  .chip{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center}
-
-  /* curved divider */
-  .wave{display:block;width:100%;height:44px;background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,0));mask:radial-gradient(200% 44px at 50% -10px,#0000 40px,#000 41px);-webkit-mask:radial-gradient(200% 44px at 50% -10px,#0000 40px,#000 41px)}
-
-  /* ===== BODY ===== */
-  .body{padding:24px}
-  .trust{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:16px}
-  .trust span{display:inline-flex;gap:6px;align-items:center;padding:8px 12px;border:1px solid #dce6ff;background:#f5f9ff;border-radius:999px;font-weight:700;color:#294}
-  .trust span:nth-child(1){color:#0b3}
-  .trust span:nth-child(2){color:#063cb6}
-  .trust span:nth-child(3){color:#6b7280}
-
-  .layout{display:grid;gap:26px;grid-template-columns:2fr 1fr}
-  @media (max-width:860px){.layout{grid-template-columns:1fr}}
-
-  /* pricing card */
-  .card{border:1px solid #dce6ff;background:#fff;border-radius:20px;box-shadow:0 10px 28px rgba(0,0,0,.08)}
-  .pricing{padding:18px 18px 8px}
-  .pricing h3{margin:0 0 10px;color:#233b79}
-  .tbl{width:100%;border-collapse:separate;border-spacing:0 12px}
-  .row{display:grid;grid-template-columns:1fr auto;gap:12px;background:#f7fbff;border:1px solid #e5efff;padding:14px;border-radius:14px}
-  .row strong{color:#0b1220}
-  .row .amt{font-weight:900;color:#0b1220}
-
-  .bullets{margin:12px 0 14px;padding-left:18px}
-  .bullets li{margin:6px 0}
-
-  /* service area panel */
-  .panel{margin:10px 0 0;padding:14px;border-radius:16px;border:1px solid #dce6ff;background:#f5f9ff}
-  .panel strong{color:#0b1220}
-
-  /* features ribbon */
-  .ribbon{display:grid;gap:14px;grid-template-columns:repeat(3,minmax(180px,1fr));margin:18px 0 4px}
-  .feat{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid #e6edff;border-radius:14px;background:linear-gradient(180deg,#fbfdff,#f4f8ff)}
-  .feat b{color:#063cb6}
-
-  /* QR block */
-  .qrblock{display:flex;flex-direction:column;align-items:center;gap:10px;justify-self:center}
-  .qr{width:220px;height:220px;border-radius:14px;background:#fff;border:1px solid #dbe5ff;box-shadow:0 8px 22px rgba(0,0,0,.1);display:flex;align-items:center;justify-content:center;overflow:hidden}
-  .qr img{width:100%;height:100%;display:block}
-  .qrblock small{color:#6b7687;font-weight:700}
-
-  /* CTA strip */
-  .cta{margin-top:18px;border:1px solid #cfe0ff;border-radius:16px;background:linear-gradient(90deg,#eef5ff,#ecfff7);padding:16px 14px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
-  .cta strong{color:#063cb6}
-  .btn{border:0;border-radius:12px;background:var(--green);color:#063;font-weight:900;padding:.9rem 1.2rem;cursor:pointer}
-
-  /* footer */
-  .footer{text-align:center;margin:14px 0 10px}
-  .links a{color:#063cb6;text-decoration:none;font-weight:900}
-  .handle{margin-top:6px;color:#6b7280}
-
-  /* print */
-  @media print{
-    html,body{background:#fff}
-    .flyer{box-shadow:none}
-    .wave{display:none}
-    .btn{display:none}
-  }
-  svg{display:block}
-</style>
-</head>
-<body>
-  <div class="page">
-    <section class="flyer">
-      <!-- ===== HERO ===== -->
-      <div class="hero">
-        <div class="toprow">
-          <div class="brand">
-            <div class="glyph" aria-hidden="true">
-              <!-- basket -->
-              <svg width="42" height="42" viewBox="0 0 64 64" fill="none">
-                <circle cx="32" cy="32" r="22" stroke="white" stroke-width="3" fill="rgba(255,255,255,.06)"/>
-                <path d="M20 28h24M22 34h20M24 40h16" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
-              </svg>
-              <!-- van -->
-              <svg width="54" height="34" viewBox="0 0 64 40" fill="none">
-                <rect x="2" y="10" width="42" height="18" rx="3" stroke="white" stroke-width="2" fill="rgba(255,255,255,.08)"/>
-                <rect x="44" y="16" width="12" height="12" rx="2" stroke="white" stroke-width="2" fill="rgba(255,255,255,.08)"/>
-                <circle cx="16" cy="32" r="4" fill="#fff"/><circle cx="50" cy="32" r="4" fill="#fff"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <h1 class="word">Laundry That<br/>Moves as Fast<br/>as You Do.</h1>
-        <p class="tag">Standard and express pickup & delivery with pro wash–dry–fold.</p>
-
-        <div class="chips" aria-hidden="true">
-          <div class="chip">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="14" height="8" rx="2" stroke="#fff" stroke-width="2"/><rect x="16" y="9" width="6" height="6" rx="1.5" stroke="#fff" stroke-width="2"/><circle cx="8" cy="17" r="2" fill="#fff"/><circle cx="19" cy="17" r="2" fill="#fff"/></svg>
-          </div>
-          <div class="chip">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="14" r="7" stroke="#fff" stroke-width="2"/><line x1="12" y1="5" x2="12" y2="2" stroke="#fff" stroke-width="2"/><line x1="12" y1="14" x2="12" y2="9" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="14" x2="16" y2="14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
-          <div class="chip">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="8" cy="12" r="3" stroke="#fff" stroke-width="2"/><circle cx="14" cy="10" r="2" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="14.5" r="1.5" stroke="#fff" stroke-width="2"/></svg>
-          </div>
-        </div>
-      </div>
-      <div class="wave"></div>
-
-      <!-- ===== BODY ===== -->
-      <div class="body">
-        <!-- trust bar -->
-        <div class="trust">
-          <span>• West Michigan •</span>
-          <span>• Female-Owned •</span>
-          <span>• Bonded & Insured •</span>
-        </div>
-
-        <div class="layout">
-          <div>
-            <!-- pricing -->
-            <div class="card pricing">
-              <h3>Transparent Pricing</h3>
-              <div class="tbl">
-                <div class="row"><strong>Standard Wash, Dry & Fold</strong><div class="amt">$1.75/lb</div></div>
-                <div class="row"><strong>Express Service</strong><div class="amt">$2.25/lb</div></div>
-                <div class="row"><strong>Minimum Order</strong><div class="amt">$35 min</div></div>
-              </div>
-              <ul class="bullets">
-                <li>We weigh laundry for accuracy</li>
-                <li>Free local pickup & delivery</li>
-              </ul>
-            </div>
-
-            <!-- features ribbon -->
-            <div class="ribbon">
-              <div class="feat"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 12l4 4 12-12" stroke="#10b981" stroke-width="2"/></svg><div><b>Founding Perks</b><br/>Early-bird slots + priority routes.</div></div>
-              <div class="feat"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#063cb6" stroke-width="2"/></svg><div><b>24–48h Turnaround</b><br/>Rush upgrades when you need it.</div></div>
-              <div class="feat"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2l4 8-4 12-4-12 4-8z" stroke="#ef4444" stroke-width="2"/></svg><div><b>Tiered Plans</b><br/>Bundles for families & busy pros.</div></div>
-            </div>
-
-            <!-- service area -->
-            <div class="panel">
-              <strong>Proudly serving West Michigan — within 20 miles of Kalamazoo.</strong><br/>
-              Female-Owned & Locally Operated • Bonded & Insured for your peace of mind
-            </div>
-          </div>
-
-          <!-- QR -->
-          <div class="qrblock">
-            <div class="qr">
-              <!-- Real QR to your signup landing page -->
-              <img alt="Scan to join the waitlist"
-                src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https%3A%2F%2Fschrodingersmissingcat.github.io%2Fspin-dash%2F" />
-            </div>
-            <small>Scan to Book Pickup</small>
-          </div>
-        </div>
-
-        <!-- CTA -->
-        <div class="cta">
-          <div><strong>Questions?</strong> Call or text <a href="tel:+12695508801" style="color:#063cb6;text-decoration:none;font-weight:900">269-550-8801</a> or email <a href="mailto:spinanddashlaundry@gmail.com" style="color:#063cb6;text-decoration:none;font-weight:900">spinanddashlaundry@gmail.com</a>.</div>
-          <button class="btn" onclick="window.print()">Print / Save as PDF</button>
-        </div>
-
-        <!-- footer -->
-        <div class="footer">
-          <div class="links">@SpinAndDashLaundry</div>
-          <div class="handle">Female-Owned • Bonded & Insured • West Michigan</div>
-        </div>
-      </div>
-    </section>
+:root{--blue:#0a6dff;--blueD:#063cb6;--ink:#0b1220;--muted:#5f6b7a;--paper:#fff;--radius:22px}
+*{box-sizing:border-box}html,body{margin:0;background:#eef3ff;color:var(--ink);font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif}
+.page{max-width:980px;margin:28px auto;padding:16px}
+.card{background:var(--paper);border-radius:var(--radius);box-shadow:0 18px 44px rgba(0,0,0,.14);overflow:hidden}
+.hero{padding:34px 24px;color:#fff;background:linear-gradient(135deg,var(--blueD),var(--blue))}
+h1{margin:6px 0 4px;font-size:46px;line-height:1.05;letter-spacing:.2px}
+p.sub{margin:0;opacity:.95}
+.body{padding:22px}
+.ribbon{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.badge{padding:8px 12px;border:1px solid #dce6ff;background:#f5f9ff;border-radius:999px;font-weight:700;font-size:13px;color:#243b6a}
+.grid{display:grid;gap:22px;grid-template-columns:2fr 1fr}
+@media (max-width:840px){.grid{grid-template-columns:1fr}}
+.pricing{border:1px solid #dce6ff;border-radius:18px;padding:16px;background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+.row{display:grid;grid-template-columns:1fr auto;gap:12px;background:#f8fbff;border:1px solid #e7efff;padding:14px;border-radius:14px;margin:10px 0}
+.row b{color:#0b1220}.amt{font-weight:900}
+ul{margin:10px 0 0 18px}li{margin:6px 0}
+.offer{margin-top:14px;padding:12px;border-radius:12px;background:#eef7ff;border:1px dashed #bcd4ff;font-weight:800;color:#063cb6}
+.callbox{align-self:start;text-align:center;border:2px solid #063cb6;border-radius:18px;padding:18px;background:#f6f9ff;box-shadow:0 10px 24px rgba(0,0,0,.06)}
+.callbox .cta{font-size:22px;font-weight:900;margin:6px 0}
+.callbox .num{font-size:28px;font-weight:900;color:#063cb6}
+.callbox small{color:#6b7280}
+.footer{text-align:center;margin:16px 0 12px;color:#5f6b7a;font-size:13px}
+@media print{html,body{background:#fff}.card{box-shadow:none}}
+</style></head><body>
+<div class="page"><section class="card">
+  <div class="hero">
+    <h1>Laundry That Moves as Fast as You Do.</h1>
+    <p class="sub">Founding routes now open—48-hour turnaround, pro wash–dry–fold.</p>
   </div>
-</body>
-</html>
+  <div class="body">
+    <div class="ribbon">
+      <span class="badge">West Michigan (20-mile radius of Kalamazoo)</span>
+      <span class="badge">Female-Owned</span>
+      <span class="badge">Bonded &amp; Insured</span>
+    </div>
+
+    <div class="grid">
+      <div class="pricing">
+        <div class="row"><b>Standard Wash, Dry &amp; Fold</b><div class="amt">$1.75/lb</div></div>
+        <div class="row"><b>Express Service</b><div class="amt">$2.25/lb</div></div>
+        <div class="row"><b>Minimum Order</b><div class="amt">$35 min</div></div>
+        <ul>
+          <li>We weigh laundry for accuracy</li>
+          <li>Free local pickup &amp; delivery</li>
+        </ul>
+        <div class="offer">Early access: join the list today and get priority route selection.</div>
+      </div>
+
+      <aside class="callbox">
+        <div>Text “SPIN” to</div>
+        <div class="num">269-550-8801</div>
+        <div class="cta">Book or Join the Waitlist</div>
+        <div>or email</div>
+        <div class="cta" style="font-size:16px"><a href="mailto:spinanddashlaundry@gmail.com" style="color:#063cb6;text-decoration:none;">spinanddashlaundry@gmail.com</a></div>
+        <small>One action. Fast reply.</small>
+      </aside>
+    </div>
+
+    <div class="footer">© Spin &amp; Dash Laundry • Female-Owned • Bonded &amp; Insured • West Michigan</div>
+  </div>
+</section></div>
+</body></html>
