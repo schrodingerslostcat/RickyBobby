@@ -3,119 +3,163 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Spin & Dash Laundry — Flyer</title>
+<title>Spin & Dash Laundry — Launch Flyer</title>
 <style>
-  /* === Brand tokens (simple & safe) === */
   :root{
-    --brand:#0A6DFF;        /* vivid blue */
-    --brandDark:#0447B8;    /* deep blue */
-    --ink:#0f172a;          /* body text */
-    --muted:#5f6b7a;        /* secondary text */
+    --brand:#0A6DFF; --brandDark:#0447B8; --ink:#0f172a; --muted:#5f6b7a;
+    --paper:#ffffff; --soft:#f2f6ff; --accent:#10b981;
     --radius:22px;
   }
   *{box-sizing:border-box}
+  html,body{margin:0;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif;background:var(--soft);color:var(--ink)}
+  .page{max-width:940px;margin:28px auto;padding:18px}
 
-  /* === Layout === */
-  html,body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#f2f6ff}
-  .page{
-    max-width:940px;margin:28px auto;padding:20px;
-  }
+  /* Card */
+  .card{background:var(--paper);border-radius:var(--radius);box-shadow:0 16px 40px rgba(0,0,0,.12);overflow:hidden}
 
-  /* === Hero ribbon (no overlays) === */
-  .hero{
-    background:linear-gradient(135deg,var(--brandDark),var(--brand));
-    color:#fff;border-radius:20px;padding:28px 22px 30px; text-align:center;
-  }
-  .hero .lockup{display:flex;gap:12px;justify-content:center;align-items:center;margin-bottom:8px}
-  .hero .lockup .glyph{font-size:40px}
-  .hero h1{margin:0;font-size:40px;line-height:1.1;letter-spacing:.2px}
-  .hero p{margin:6px 0 0;font-size:16px;opacity:.95}
-  .chips{display:flex;gap:10px;justify-content:center;margin-top:14px}
-  .chip{width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,.18);
-        border:1px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;font-size:22px}
+  /* HERO — pure div layers (no pseudo-elements = no blanking) */
+  .hero{position:relative;background:linear-gradient(135deg,var(--brandDark),var(--brand));color:#fff;padding:34px 26px 42px;text-align:center}
+  .hero .blob{position:absolute;inset:auto auto -40px -40px;width:220px;height:220px;background:radial-gradient(closest-side,rgba(255,255,255,.22),transparent 70%);filter:blur(2px);}
+  .hero .blob.b2{left:auto;right:-40px;bottom:-48px}
+  .logo{display:flex;gap:12px;justify-content:center;align-items:center}
+  .wordmark{font-weight:800;font-size:42px;letter-spacing:.2px;margin:8px 0 4px}
+  .tag{margin:0;opacity:.95;font-size:16px}
+  .chips{display:flex;gap:10px;justify-content:center;margin-top:16px}
+  .chip{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3)}
 
-  /* === Content card === */
-  .card{
-    background:#fff;border-radius:var(--radius);margin-top:-18px; padding:26px 22px 28px;
-    box-shadow:0 14px 34px rgba(0,0,0,.12);
-  }
+  /* CONTENT */
+  .content{padding:26px 24px 28px}
   .grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .pill{display:inline-block;margin-bottom:8px;padding:6px 10px;border-radius:999px;background:#e8f0ff;color:var(--brandDark);font-weight:700;font-size:12px}
   .t{margin:0;color:var(--brandDark);font-weight:800;font-size:18px}
-  .d{margin:6px 0 0;font-size:14px}
-  .pill{display:inline-block;margin-bottom:6px;padding:6px 10px;border-radius:999px;
-        background:#e9f1ff;color:var(--brandDark);font-weight:700;font-size:12px}
+  .d{margin:6px 0 0;font-size:14px;line-height:1.5}
 
-  .cta{
-    margin-top:22px;border:1px solid #cfe0ff;border-radius:14px;
-    background:linear-gradient(90deg,#eef5ff,#ecfff7);padding:16px 14px;
-    display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between
-  }
+  .cta{margin-top:24px;border:1px solid #cfe0ff;border-radius:14px;background:linear-gradient(90deg,#eef5ff,#ecfff7);padding:16px 14px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
   .cta strong{color:var(--brandDark)}
-  .btn{border:0;border-radius:12px;background:#10b981;color:#063; font-weight:800;padding:.9rem 1.2rem;cursor:pointer}
+  .btn{border:0;border-radius:12px;background:var(--accent);color:#063;font-weight:800;padding:.9rem 1.2rem;cursor:pointer}
 
   .contact{text-align:center;margin-top:16px;line-height:1.6}
-  .badges{text-align:center;color:var(--muted);font-size:12px;margin-top:8px}
+  .contact a{color:var(--brandDark);text-decoration:none;font-weight:700}
+  .badges{display:flex;gap:14px;justify-content:center;color:var(--muted);font-size:12px;margin-top:8px;flex-wrap:wrap}
+  .badge{display:inline-flex;align-items:center;gap:6px}
+  .badge svg{width:14px;height:14px;color:var(--brandDark)}
 
-  /* === Print: keep it clean, no shadows === */
+  /* PRINT — clean page, no shadows; adds tear-offs */
   @media print{
     html,body{background:#fff}
     .card{box-shadow:none}
     .btn{display:none}
+    .hero{color:#0c2340;background:#eaf2ff}
+    .chip{background:#e7efff;border-color:#cfe0ff}
+    .tear{
+      display:grid;grid-template-columns:repeat(10,1fr);gap:8px;margin:22px 0 8px;padding-top:10px;
+      border-top:1px dashed #b3c5e7;font:700 12px/1.2 Inter,Arial,sans-serif;color:#0c2340;text-align:center
+    }
+    .tear>span{border-right:1px dashed #c9d7f2;padding-right:6px}
+    .tear>span:last-child{border-right:0}
   }
 
-  /* === Small screens === */
-  @media (max-width:520px){
-    .hero h1{font-size:30px}
-  }
+  @media (max-width:520px){.wordmark{font-size:32px}}
+  svg{display:block}
 </style>
 </head>
 <body>
   <div class="page">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="lockup"><span class="glyph">🚚</span><span class="glyph">⏱️</span></div>
-      <h1>Spin &amp; Dash Laundry</h1>
-      <p>Your Laundry. Spun. Dashed. Delivered.</p>
-      <div class="chips" aria-hidden="true">
-        <div class="chip">🚚</div><div class="chip">⏱️</div><div class="chip">🫧</div>
-      </div>
-    </section>
-
-    <!-- CONTENT -->
     <section class="card">
-      <div class="grid">
-        <div>
-          <span class="pill">Speed</span>
-          <p class="t">Fast Turnaround</p>
-          <p class="d">Optimized routes for 24–48-hour service; premium rush available.</p>
+      <!-- HERO -->
+      <div class="hero">
+        <div class="blob"></div><div class="blob b2"></div>
+
+        <!-- Inline SVG logo: van + stopwatch (vector sharp in print) -->
+        <div class="logo" aria-hidden="true">
+          <svg width="44" height="28" viewBox="0 0 64 40" fill="none" role="img" aria-label="Van">
+            <rect x="2" y="10" width="42" height="18" rx="3" stroke="white" stroke-width="2" fill="rgba(255,255,255,.08)"/>
+            <rect x="44" y="16" width="12" height="12" rx="2" stroke="white" stroke-width="2" fill="rgba(255,255,255,.08)"/>
+            <circle cx="16" cy="32" r="4" fill="#fff"/><circle cx="50" cy="32" r="4" fill="#fff"/>
+          </svg>
+          <svg width="34" height="34" viewBox="0 0 64 64" fill="none" role="img" aria-label="Stopwatch">
+            <circle cx="32" cy="36" r="20" stroke="white" stroke-width="3" fill="rgba(255,255,255,.06)"/>
+            <line x1="32" y1="18" x2="32" y2="8" stroke="white" stroke-width="3"/>
+            <line x1="32" y1="36" x2="32" y2="24" stroke="white" stroke-width="4" stroke-linecap="round"/>
+            <line x1="32" y1="36" x2="42" y2="36" stroke="white" stroke-width="4" stroke-linecap="round"/>
+          </svg>
         </div>
-        <div>
-          <span class="pill">Value</span>
-          <p class="t">Tiered Plans &amp; Bundles</p>
-          <p class="d">Founding plans launching soon for families &amp; busy pros.</p>
-        </div>
-        <div>
-          <span class="pill">Care</span>
-          <p class="t">Eco-Friendly Clean</p>
-          <p class="d">High-efficiency machines with biodegradable detergents.</p>
-        </div>
-        <div>
-          <span class="pill">Business</span>
-          <p class="t">Commercial Solutions</p>
-          <p class="d">Custom packages for hotels, clinics &amp; corporate clients.</p>
+
+        <div class="wordmark">Spin &amp; Dash Laundry</div>
+        <p class="tag">Your Laundry. Spun. Dashed. Delivered.</p>
+
+        <div class="chips" aria-hidden="true">
+          <div class="chip">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2" y="7" width="14" height="8" rx="2" stroke="#fff" stroke-width="2"/><rect x="16" y="9" width="6" height="6" rx="1.5" stroke="#fff" stroke-width="2"/><circle cx="8" cy="17" r="2" fill="#fff"/><circle cx="19" cy="17" r="2" fill="#fff"/></svg>
+          </div>
+          <div class="chip">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="14" r="7" stroke="#fff" stroke-width="2"/><line x1="12" y1="5" x2="12" y2="2" stroke="#fff" stroke-width="2"/><line x1="12" y1="14" x2="12" y2="9" stroke="#fff" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="14" x2="16" y2="14" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="chip">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="8" cy="12" r="3" stroke="#fff" stroke-width="2"/><circle cx="14" cy="10" r="2" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="14.5" r="1.5" stroke="#fff" stroke-width="2"/></svg>
+          </div>
         </div>
       </div>
 
-      <div class="cta">
-        <div><strong>Be first to launch.</strong> Join text alerts &amp; email notifications for routes and the app drop.</div>
-        <button class="btn" onclick="window.print()">Print / Save as PDF</button>
-      </div>
+      <!-- CONTENT -->
+      <div class="content">
+        <div class="grid">
+          <article>
+            <span class="pill">Speed</span>
+            <p class="t">Fast Turnaround</p>
+            <p class="d">Optimized routes for 24–48-hour service; premium rush available when you need it even faster.</p>
+          </article>
 
-      <div class="contact">
-        Call or Text: <a href="tel:+12695508801">269-550-8801</a><br>
-        Email: <a href="mailto:spinanddashlaundry@gmail.com">spinanddashlaundry@gmail.com</a>
+          <article>
+            <span class="pill">Value</span>
+            <p class="t">Tiered Plans &amp; Bundles</p>
+            <p class="d">Founding plans launching at a discount for families and busy pros. Mix-and-match add-ons.</p>
+          </article>
+
+          <article>
+            <span class="pill">Care</span>
+            <p class="t">Eco-Friendly Clean</p>
+            <p class="d">High-efficiency machines with biodegradable detergents; gentle options for sensitive skin.</p>
+          </article>
+
+          <article>
+            <span class="pill">Business</span>
+            <p class="t">Commercial Solutions</p>
+            <p class="d">Custom packages for hotels, clinics &amp; corporate clients with scheduled pickups.</p>
+          </article>
+        </div>
+
+        <div class="cta">
+          <div><strong>Be first to launch.</strong> Join text alerts &amp; email notifications for routes and the app drop.</div>
+          <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+        </div>
+
+        <div class="contact">
+          Call or Text: <a href="tel:+12695508801">269-550-8801</a><br>
+          Email: <a href="mailto:spinanddashlaundry@gmail.com">spinanddashlaundry@gmail.com</a>
+        </div>
+
+        <div class="badges">
+          <span class="badge">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l4 4 12-12" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            Female-Owned
+          </span>
+          <span class="badge">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12l2 2 6-6" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+            Bonded &amp; Insured
+          </span>
+          <span class="badge">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l4 8-4 12-4-12 4-8z" stroke="currentColor" stroke-width="2"/></svg>
+            West Michigan
+          </span>
+        </div>
+
+        <!-- Print-only tear-offs -->
+        <div class="tear">
+          <span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span>
+          <span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span><span>269-550-8801</span>
+        </div>
       </div>
-      <div class="badges">Female-Owned • Bonded &amp; Insured • West Michigan</div>
     </section>
   </div>
 </body>
