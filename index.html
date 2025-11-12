@@ -3,99 +3,19 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Spin & Dash Laundry — Flyer</title>
+<title>Spin & Dash Laundry — Launch Flyer</title>
 <style>
+  /* ====== Brand tokens ====== */
   :root{
-    --brand:#0070f3;--brandDark:#004fa4;--ink:#0f172a;--muted:#64748b;
-    --radius:20px;--shadow:0 10px 24px rgba(0,0,0,.12)
+    --brand:#0A6DFF;         /* vivid blue */
+    --brandDark:#0447B8;     /* deep blue */
+    --ink:#0f172a;           /* text */
+    --muted:#64748b;         /* secondary text */
+    --card:#ffffff;
+    --radius:22px;
+    --shadow:0 18px 40px rgba(0,0,0,.16);
+    --pill:rgba(10,109,255,.10);
+    --accent:#11b981;        /* green pop */
   }
   *{box-sizing:border-box}
-  html,body{margin:0;height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
-  body{
-    background:linear-gradient(135deg,var(--brandDark) 0%,var(--brand) 100%);
-    display:flex;align-items:center;justify-content:center;padding:20px;position:relative;overflow:hidden
-  }
-  /* bubble glow */
-  body:before{
-    content:"";position:absolute;inset:-50vh -50vw;pointer-events:none;
-    background-image:
-      radial-gradient(circle at 20% 30%,rgba(255,255,255,.15) 0%,rgba(255,255,255,0) 50%),
-      radial-gradient(circle at 80% 40%,rgba(255,255,255,.2) 0%,rgba(255,255,255,0) 60%),
-      radial-gradient(circle at 50% 90%,rgba(255,255,255,.18) 0%,rgba(255,255,255,0) 55%),
-      radial-gradient(circle at 70% 80%,rgba(255,255,255,.12) 0%,rgba(255,255,255,0) 50%),
-      radial-gradient(circle at 30% 70%,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 40%)
-  }
-  .card{
-    position:relative;z-index:1;max-width:850px;width:100%;
-    background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:40px 32px
-  }
-  .logo{display:flex;gap:12px;align-items:center;justify-content:center;margin-bottom:10px}
-  .logo .glyph{font-size:40px;color:var(--brandDark)}
-  h1{margin:0 0 6px;font-size:36px;font-weight:700;color:var(--brandDark);text-align:center}
-  h2{margin:0 0 24px;font-size:18px;font-weight:600;color:var(--muted);text-align:center}
-  .icons{display:flex;gap:10px;justify-content:center;margin:8px 0 20px}
-  .pill{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;
-        border-radius:50%;background:rgba(0,0,0,.05);color:var(--brandDark);font-size:22px}
-  .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));margin:14px 0 24px}
-  .t{margin:0;font-weight:700;color:var(--brandDark);font-size:18px}
-  .d{margin:4px 0 0;font-size:14px}
-  .cta{margin:16px 0 10px;text-align:center;color:var(--brandDark);font-weight:700}
-  .contact{text-align:center;font-size:16px;line-height:1.5}
-  .badges{display:flex;justify-content:center;gap:16px;margin-top:16px;color:var(--muted);font-size:12px}
-  .actions{display:flex;justify-content:center;margin-top:20px;gap:10px}
-  .btn{appearance:none;border:0;border-radius:12px;background:var(--brand);color:#fff;
-       padding:.8rem 1.1rem;font-weight:700;cursor:pointer}
-  @media(max-width:520px){h1{font-size:28px} h2{font-size:16px}}
-  /* print-friendly: white page, hide background + button */
-  @media print{
-    body{background:#fff !important}
-    body:before{display:none}
-    .btn{display:none}
-    .card{box-shadow:none;padding:0}
-  }
-</style>
-</head>
-<body>
-  <div class="card">
-    <div class="logo"><span class="glyph">🚚</span><span class="glyph">⏱️</span></div>
-    <h1>Spin &amp; Dash Laundry</h1>
-    <h2>Your Laundry. Spun. Dashed. Delivered.</h2>
-
-    <div class="icons">
-      <span class="pill">🚚</span>
-      <span class="pill">⏱️</span>
-      <span class="pill">🫧</span>
-    </div>
-
-    <div class="grid">
-      <div>
-        <p class="t">Fast Turnaround</p>
-        <p class="d">Optimized routes for 24–48 hour service; premium rush available.</p>
-      </div>
-      <div>
-        <p class="t">Tiered Plans &amp; Bundles</p>
-        <p class="d">Memberships launching soon for families &amp; professionals.</p>
-      </div>
-      <div>
-        <p class="t">Eco-Friendly Care</p>
-        <p class="d">High-efficiency machines &amp; biodegradable detergents.</p>
-      </div>
-      <div>
-        <p class="t">Business Solutions</p>
-        <p class="d">Custom packages for hotels, clinics &amp; corporate clients.</p>
-      </div>
-    </div>
-
-    <div class="cta">Join text alerts &amp; email notifications</div>
-    <div class="contact">
-      Call or Text: <strong>269-550-8801</strong><br>
-      Email: <strong>spinanddashlaundry@gmail.com</strong>
-    </div>
-    <div class="badges"><span>Female-Owned</span><span>Bonded &amp; Insured</span><span>West Michigan</span></div>
-
-    <div class="actions">
-      <button class="btn" onclick="window.print()">Print / Save as PDF</button>
-    </div>
-  </div>
-</body>
-</html>
+  html,body{margin:0;height:100%;font-family:Inter,system-ui,Arial,sans-serif;color:var(--
