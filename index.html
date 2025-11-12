@@ -1,66 +1,31 @@
-<!doctype html><html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Spin & Dash Laundry — Founding Routes</title>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spin & Dash Laundry — One-Page Flyer</title>
 <style>
-:root{--blue:#0a6dff;--blueD:#063cb6;--ink:#0b1220;--muted:#5f6b7a;--paper:#fff;--radius:22px}
-*{box-sizing:border-box}html,body{margin:0;background:#eef3ff;color:var(--ink);font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif}
-.page{max-width:980px;margin:28px auto;padding:16px}
-.card{background:var(--paper);border-radius:var(--radius);box-shadow:0 18px 44px rgba(0,0,0,.14);overflow:hidden}
-.hero{padding:34px 24px;color:#fff;background:linear-gradient(135deg,var(--blueD),var(--blue))}
-h1{margin:6px 0 4px;font-size:46px;line-height:1.05;letter-spacing:.2px}
-p.sub{margin:0;opacity:.95}
-.body{padding:22px}
-.ribbon{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-.badge{padding:8px 12px;border:1px solid #dce6ff;background:#f5f9ff;border-radius:999px;font-weight:700;font-size:13px;color:#243b6a}
-.grid{display:grid;gap:22px;grid-template-columns:2fr 1fr}
-@media (max-width:840px){.grid{grid-template-columns:1fr}}
-.pricing{border:1px solid #dce6ff;border-radius:18px;padding:16px;background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.08)}
-.row{display:grid;grid-template-columns:1fr auto;gap:12px;background:#f8fbff;border:1px solid #e7efff;padding:14px;border-radius:14px;margin:10px 0}
-.row b{color:#0b1220}.amt{font-weight:900}
-ul{margin:10px 0 0 18px}li{margin:6px 0}
-.offer{margin-top:14px;padding:12px;border-radius:12px;background:#eef7ff;border:1px dashed #bcd4ff;font-weight:800;color:#063cb6}
-.callbox{align-self:start;text-align:center;border:2px solid #063cb6;border-radius:18px;padding:18px;background:#f6f9ff;box-shadow:0 10px 24px rgba(0,0,0,.06)}
-.callbox .cta{font-size:22px;font-weight:900;margin:6px 0}
-.callbox .num{font-size:28px;font-weight:900;color:#063cb6}
-.callbox small{color:#6b7280}
-.footer{text-align:center;margin:16px 0 12px;color:#5f6b7a;font-size:13px}
-@media print{html,body{background:#fff}.card{box-shadow:none}}
-</style></head><body>
-<div class="page"><section class="card">
-  <div class="hero">
-    <h1>Laundry That Moves as Fast as You Do.</h1>
-    <p class="sub">Founding routes now open—48-hour turnaround, pro wash–dry–fold.</p>
-  </div>
-  <div class="body">
-    <div class="ribbon">
-      <span class="badge">West Michigan (20-mile radius of Kalamazoo)</span>
-      <span class="badge">Female-Owned</span>
-      <span class="badge">Bonded &amp; Insured</span>
-    </div>
+  /* --- Design tokens --- */
+  :root{
+    --blue:#0A6DFF; --blueD:#063CB6; --ink:#0b1220; --muted:#5f6b7a;
+    --paper:#ffffff; --soft:#eff4ff; --green:#10b981; --radius:22px;
+  }
+  *{box-sizing:border-box} html,body{margin:0;background:var(--soft);color:var(--ink);font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif}
 
-    <div class="grid">
-      <div class="pricing">
-        <div class="row"><b>Standard Wash, Dry &amp; Fold</b><div class="amt">$1.75/lb</div></div>
-        <div class="row"><b>Express Service</b><div class="amt">$2.25/lb</div></div>
-        <div class="row"><b>Minimum Order</b><div class="amt">$35 min</div></div>
-        <ul>
-          <li>We weigh laundry for accuracy</li>
-          <li>Free local pickup &amp; delivery</li>
-        </ul>
-        <div class="offer">Early access: join the list today and get priority route selection.</div>
-      </div>
+  /* --- ONE-PAGE SHEET (Letter) --- */
+  .sheet{
+    width:816px;              /* 8.5in – margins */
+    height:1056px;            /* 11in – margins */
+    margin:24px auto;
+    background:var(--paper);
+    border-radius:20px;
+    box-shadow:0 18px 44px rgba(0,0,0,.14);
+    overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  /* Prevent ANY page breaks */
+  .no-break{page-break-inside:avoid;break-inside:avoid}
 
-      <aside class="callbox">
-        <div>Text “SPIN” to</div>
-        <div class="num">269-550-8801</div>
-        <div class="cta">Book or Join the Waitlist</div>
-        <div>or email</div>
-        <div class="cta" style="font-size:16px"><a href="mailto:spinanddashlaundry@gmail.com" style="color:#063cb6;text-decoration:none;">spinanddashlaundry@gmail.com</a></div>
-        <small>One action. Fast reply.</small>
-      </aside>
-    </div>
-
-    <div class="footer">© Spin &amp; Dash Laundry • Female-Owned • Bonded &amp; Insured • West Michigan</div>
-  </div>
-</section></div>
-</body></html>
+  /* --- Header / hero --- */
+  .hero{background:linear-gradient(135deg,var(--blueD),var(--blue));color:#fff;padding:28px 30px 22px}
+  .eyebar{display:flex;gap:8px;
